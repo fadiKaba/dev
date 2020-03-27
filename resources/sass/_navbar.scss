@@ -1,0 +1,80 @@
+
+@mixin main-btn($paddingy, $paddingx, $backgroundcolor, $color, $fontsize){
+    background-color: $backgroundcolor;
+    color:$color;
+    padding: $paddingy $paddingx;
+    font-size: $fontsize;
+    transition:0.2s;
+    &:hover{
+        background-color: $pink;
+        color: $color;
+    }
+}
+
+nav{
+    transition: 1s;
+    .container{
+        ul{
+            li{ 
+                padding: 10px 0;
+                a{
+                    padding: 10px 20px;
+                    font-size: 1rem;
+                    font-family: 'Poppins', sans-serif;
+                    font-weight: 400;
+                    color: $blue;
+                    transition: 0.5s;                
+                    &:hover{
+                    text-decoration: none; 
+                    color: $pink; 
+                    }
+                }           
+            }
+            .dropdown{
+                button{
+                @include main-btn(6px, 10px  , $bluebtn , #fff, 1rem );
+                }
+            }      
+         }
+    }
+    
+}
+
+.second-nav{
+    display: none;
+}
+.x-nav{
+    display: block;
+    animation: trans 1s ease-in-out;
+}
+.removex-nav{
+    animation: trans 1s ease-in-out;
+    display: none;
+}
+@keyframes trans{
+    0%{
+        transform: translateY(-200px);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+
+@keyframes removeTrans{
+    0%{
+        transform: translateY(0px);
+    }
+    100%{
+        transform: translateX(-2000);
+    }
+}
+
+
+@media screen and (min-width:750px){
+    .main-nav{
+        background-color: transparent;
+        position: absolute;
+        width: 100%;
+
+    }
+}

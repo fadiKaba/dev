@@ -1,0 +1,17 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+//components
+@import 'navbar';
+
+body{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    background-color: #fff;  
+}
