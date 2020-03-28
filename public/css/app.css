@@ -10981,6 +10981,43 @@ nav .container ul .dropdown button:hover {
   }
 }
 
+.footer-main {
+  background-image: url("/images/dots.png");
+  background-size: contain;
+  background-position: center;
+}
+
+.footer-main .row div h4 {
+  color: #012F5F;
+  font-size: 1.1 rem;
+  font-weight: 500;
+  margin-bottom: 4vh;
+}
+
+.footer-main .row div a,
+.footer-main .row div p {
+  display: block;
+  color: #888888;
+  padding: 10px 0;
+  font-size: 1rem;
+}
+
+.footer-main .row div:nth-child(1) .social-container a {
+  display: inline;
+  padding: 0;
+  padding-bottom: 3px;
+  transition: 0.2s;
+}
+
+.footer-main .row div:nth-child(1) .social-container a:hover {
+  background-color: #ec74a0;
+}
+
+.footer-main p {
+  font-size: 1rem;
+  color: #888888;
+}
+
 body {
   font-family: "Poppins", sans-serif;
   font-weight: 400;

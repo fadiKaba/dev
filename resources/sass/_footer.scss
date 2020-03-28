@@ -1,0 +1,39 @@
+.footer-main{
+    background-image: url('/images/dots.png');
+    background-size: contain;
+    background-position: center;
+ //   background-repeat: no-repeat;
+    .row{
+        div{
+            h4{
+                color: #012F5F;
+                font-size: 1.1 rem;
+                font-weight: 500;
+                margin-bottom: 4vh;
+            }
+            a, p{
+                display: block;
+                color: #888888;
+                padding: 10px 0;
+                font-size: 1rem;
+            }
+            &:nth-child(1){
+                .social-container{
+                    a{
+                        display: inline;
+                        padding: 0;
+                        padding-bottom: 3px;
+                        transition: 0.2s;
+                        &:hover{
+                            background-color: rgb(236, 116, 160);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    p{
+        font-size: 1rem;
+        color: #888888;
+    }
+}

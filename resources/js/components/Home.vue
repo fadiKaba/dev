@@ -1,6 +1,6 @@
 <template>
-       <div class="main-home py-5">
-           <div class="row pt-3 container mx-auto">
+       <div class="main-home py-md-5">
+           <div class="row pt-md-5 mt-md-5 container mx-auto">
                <div class="col-md-6 pt-md-5 showcase-title">
                    <h1>For You <br> Development Service</h1>
                    <p class="pb-5">
@@ -10,11 +10,11 @@
                    <button class="btn showcase-btn">Descover More</button>
                </div>
                <div class="col-md-6 showcase-img d-none d-md-block">
-                   <img class="ml-5" src="/images/showcase.png" alt="" width="100%">
+                   <img class="ml-5" src="/images/showcase.png" alt="" width="115%">
                </div>
            </div>
-           <div class="container m-auto showcase2 py-5 mt-md-5">
-               <h2 class="text-center mt-md-5">What We Will Do For Your <br> Business​</h2>
+           <div class="container mx-auto showcase2 py-5 mt-md-5">
+               <h2 class="text-center pt-md-5 mt-md-5">What We Will Do For Your <br> Business​</h2>
                <div class="row">
                    <div class="col-md-4 mt-3">
                        <div class="card">
@@ -92,13 +92,14 @@ export default {
 
 
 .main-home{
+    
     background-image: url('/images/shape2.png');
     background-size: contain;
     background-position: right;
     background-repeat: no-repeat;
-    .row{   
-                 
-        .showcase-title{           
+    .row{      
+        .showcase-title{  
+            margin-top:5vh;         
             h1{
                 animation: fromLeft 1s ease backwards;
                 font-weight: 700;
