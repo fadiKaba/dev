@@ -145,7 +145,8 @@ export default {
                     line-height: 25px;
                     font-size: 1rem;
                 }
-                a{
+                a{  
+                    cursor: pointer;
                     color: #E3E9ED;
                     font-size: 1rem;
                     padding: 5px;
