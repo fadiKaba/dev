@@ -7,8 +7,8 @@
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 <div class="social-container">
                 <a class="" href="#"><img src="/ico/facebook.svg" alt="" width="30px"></a>
-                <a class="" href="#"><img src="/ico/facebook.svg" alt="" width="30px"></a>
-                <a class="" href="#"><img src="/ico/facebook.svg" alt="" width="30px"></a> 
+                <a class="" href="#"><img src="/ico/twitter.svg" alt="" width="30px"></a>
+                <a class="" href="#"><img src="/ico/instagram.svg" alt="" width="30px"></a> 
                 </div>            
             </div>
             <div class="col-md-3">

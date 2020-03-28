@@ -16,14 +16,21 @@
                 color: #888888;
                 padding: 10px 0;
                 font-size: 1rem;
+                transition: 0.3s;
+            }
+            a:hover{
+                color: #EC4683;
+                text-decoration: none;
             }
             &:nth-child(1){
                 .social-container{
                     a{
                         display: inline;
-                        padding: 0;
+                        padding:0px;
+                        border-radius: 5px;
                         padding-bottom: 3px;
                         transition: 0.2s;
+                        background-color: #938D93;
                         &:hover{
                             background-color: rgb(236, 116, 160);
                         }
