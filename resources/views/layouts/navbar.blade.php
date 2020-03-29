@@ -59,7 +59,7 @@
     </div>
 </nav>
 
-<nav class="navbar navbar-expand-md navbar-light  bg-white shadow-sm py-3 fixed-top second-nav" >
+<nav class="navbar navbar-expand-md navbar-light  bg-white shadow-sm p-0 fixed-top second-nav" >
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}

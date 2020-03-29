@@ -9,6 +9,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import VueRouter from 'vue-router';
+
 import Home from './components/Home';
 import Blog from './components/Blog';
 
@@ -20,10 +21,14 @@ Vue.use(VueRouter)
 // });
 
 
+
+
 const routes = [
-  {path: '/', component: Home},
+  {path: '/', name: 'home', component: Home},
   {path: '/blog', component: Blog}
 ];
+
+
 
 const router = new VueRouter({
   routes,
@@ -47,9 +52,6 @@ const app = new Vue({
         }else{
           document.querySelector('.second-nav').classList.remove('x-nav')
         }      
-      },    
+      },  
   },
-  watch:{
-
-  }
 }).$mount('#app');

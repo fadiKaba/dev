@@ -71,11 +71,34 @@
            </div>
        </div>
 </template>
+
+
+
+
+
 <script>
+
+import axios from 'axios';
+
 export default {
     name: 'Home',
+    mounted: function(){
+        
+    },
+    methods:{
+       
+    }
 }
+
 </script>
+
+
+
+
+
+
+
+
 <style lang="scss" scoped>
 
 @mixin main-btn($paddingy, $paddingx, $backgroundcolor, $color, $fontsize){
@@ -98,8 +121,7 @@ export default {
     background-position: right;
     background-repeat: no-repeat;
     .row{      
-        .showcase-title{  
-            margin-top:5vh;         
+        .showcase-title{       
             h1{
                 animation: fromLeft 1s ease backwards;
                 font-weight: 700;
