@@ -1909,6 +1909,33 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Post */ "./resources/js/components/Post.vue");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1974,12 +2001,15 @@ __webpack_require__.r(__webpack_exports__);
       postImage: '',
       postTitle: '',
       postBody: '',
+      successMessage: '',
       errMessage: '',
-      errs: ''
+      errs: '',
+      arrPosts: []
     };
   },
   mounted: function mounted() {
     this.getUser();
+    this.getPosts();
   },
   methods: {
     getUser: function getUser() {
@@ -1989,31 +2019,88 @@ __webpack_require__.r(__webpack_exports__);
         if (response.data.is_admin == 1) {
           _this.admin = true;
         }
-      }); //.catch((err) => console.log(err));
+      })["catch"](function (err) {
+        return '';
+      });
     },
-    uploadImg: function uploadImg(e) {
-      var img = e.target.files[0];
-      this.postImage = new FormData();
-      this.postImage.append('image', img);
-      console.log(img);
-    },
-    addNewPost: function addNewPost() {
+    getPosts: function getPosts() {
       var _this2 = this;
 
-      axios.post('/post', {
-        title: this.postTitle,
-        body: this.postBody,
-        image: this.postImage
+      axios.post('/getposts').then(function (response) {
+        _this2.makePostsArr(response.data);
+      });
+    },
+    makePostsArr: function makePostsArr(arr) {
+      var _this3 = this;
+
+      var Post = /*#__PURE__*/function () {
+        function Post(element) {
+          _classCallCheck(this, Post);
+
+          this.id = element.id;
+          this.userId = element.user_id;
+          this.src = element.src;
+          this.title = element.title;
+          this.body = element.body;
+        }
+
+        _createClass(Post, null, [{
+          key: "obj",
+          value: function obj() {
+            return {
+              userId: this.userId,
+              src: this.src,
+              title: this.title,
+              body: this.body
+            };
+          }
+        }]);
+
+        return Post;
+      }();
+
+      arr.forEach(function (element) {
+        var objPostReady = new Post(element);
+
+        _this3.arrPosts.unshift(objPostReady);
+      });
+    },
+    addNewPost: function addNewPost() {
+      var _this4 = this;
+
+      var postFormData = new FormData(this.$refs.addPostForm);
+      axios({
+        method: 'post',
+        url: '/post',
+        data: postFormData,
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
       }).then(function (response) {
-        _this2.errMessage = '';
-        _this2.errs = '';
-        console.log(response);
+        _this4.errMessage = '';
+        _this4.errs = '';
+
+        _this4.makePostsArr([response.data]);
+
+        _this4.postTitle = '';
+        _this4.postBody = '';
+        document.querySelector('#post-image').value = null;
+        _this4.successMessage = 'New post added successfully';
       })["catch"](function (err) {
         if (err.response) {
-          _this2.errMessage = err.response.data.message;
-          _this2.errs = err.response.data.errors;
+          _this4.errMessage = err.response.data.message;
+          _this4.errs = err.response.data.errors;
         }
       });
+    },
+    deletedItem: function deletedItem(val) {
+      for (var i = 0; i < this.arrPosts.length; i++) {
+        if (this.arrPosts[i].id == val.id) {
+          this.arrPosts.splice(i, 1);
+        }
+      }
     }
   }
 });
@@ -2127,6 +2214,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2149,7 +2238,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'Post',
+  props: ['admin', 'id', 'userId', 'title', 'body', 'src'],
+  mounted: function mounted() {},
+  methods: {
+    deletePost: function deletePost(postId) {
+      var _this = this;
+
+      var ask = confirm("Are you sure to delete ".concat(this.title, " ?"));
+
+      if (ask) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/post/".concat(postId)).then(function (response) {
+          _this.$emit('deleteditem', response.data);
+        });
+      }
+    }
+  }
+});
 
 /***/ }),
 
@@ -38271,155 +38381,191 @@ var render = function() {
       _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "row pt-2 pt-md-5" }, [
-        _c(
-          "div",
-          { staticClass: "col-md-8" },
-          [
-            _vm.admin
-              ? _c("div", [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "collapse",
-                      attrs: { id: "collapseExample" }
-                    },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "card p-md-5 border-0 shadow" },
-                        [
-                          _vm.errMessage != ""
-                            ? _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "alert alert-warning alert-dismissible fade show",
-                                  attrs: { role: "alert" }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(_vm.errMessage) +
-                                      "\n                                "
-                                  ),
-                                  _vm._m(2)
-                                ]
+        _c("div", { staticClass: "col-md-8" }, [
+          _vm.admin
+            ? _c("div", [
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "collapse", attrs: { id: "collapseExample" } },
+                  [
+                    _c("div", { staticClass: "card p-md-5 border-0 shadow" }, [
+                      _vm.errMessage != ""
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "alert alert-warning alert-dismissible fade show",
+                              attrs: { role: "alert" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(_vm.errMessage) +
+                                  "\n                                "
                               )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c("form", { attrs: { action: "" } }, [
-                            _c("div", { staticClass: "form-group" }, [
-                              _c("label", { attrs: { for: "post-image" } }, [
-                                _vm._v("Chose an image")
-                              ]),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: { type: "file", id: "post-image" },
-                                on: { change: _vm.uploadImg }
-                              }),
-                              _vm._v(" "),
-                              _vm.errs.image
-                                ? _c("p", { staticClass: "text-danger" }, [
-                                    _vm._v(_vm._s(_vm.errs.image[0]))
-                                  ])
-                                : _vm._e()
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.successMessage != ""
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "alert alert-success alert-dismissible fade show",
+                              attrs: { role: "alert" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(_vm.successMessage) +
+                                  "\n                                "
+                              )
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "form",
+                        { ref: "addPostForm", attrs: { action: "" } },
+                        [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "post-image" } }, [
+                              _vm._v("Chose an image")
                             ]),
                             _vm._v(" "),
-                            _c("div", { staticClass: "form-group" }, [
-                              _c("label", { attrs: { for: "post-title" } }, [
-                                _vm._v("Title")
-                              ]),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.postTitle,
-                                    expression: "postTitle"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "text", id: "post-title" },
-                                domProps: { value: _vm.postTitle },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.postTitle = $event.target.value
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _vm.errs.title
-                                ? _c("p", { staticClass: "text-danger" }, [
-                                    _vm._v(_vm._s(_vm.errs.title[0]))
-                                  ])
-                                : _vm._e()
-                            ]),
+                            _c("input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                name: "image",
+                                type: "file",
+                                id: "post-image"
+                              }
+                            }),
                             _vm._v(" "),
-                            _c("div", { staticClass: "form-group" }, [
-                              _c("label", { attrs: { for: "post-body" } }, [
-                                _vm._v("Body")
-                              ]),
-                              _vm._v(" "),
-                              _c("textarea", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.postBody,
-                                    expression: "postBody"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  rows: "5",
-                                  type: "text",
-                                  id: "post-body"
-                                },
-                                domProps: { value: _vm.postBody },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.postBody = $event.target.value
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _vm.errs.body
-                                ? _c("p", { staticClass: "text-danger" }, [
-                                    _vm._v(_vm._s(_vm.errs.body[0]))
-                                  ])
-                                : _vm._e()
-                            ])
+                            _vm.errs.image
+                              ? _c("p", { staticClass: "text-danger" }, [
+                                  _vm._v(_vm._s(_vm.errs.image[0]))
+                                ])
+                              : _vm._e()
                           ]),
                           _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary",
-                              on: { click: _vm.addNewPost }
-                            },
-                            [_vm._v("Add")]
-                          )
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "post-title" } }, [
+                              _vm._v("Title")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.postTitle,
+                                  expression: "postTitle"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                name: "title",
+                                type: "text",
+                                id: "post-title"
+                              },
+                              domProps: { value: _vm.postTitle },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.postTitle = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.errs.title
+                              ? _c("p", { staticClass: "text-danger" }, [
+                                  _vm._v(_vm._s(_vm.errs.title[0]))
+                                ])
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "post-body" } }, [
+                              _vm._v("Body")
+                            ]),
+                            _vm._v(" "),
+                            _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.postBody,
+                                  expression: "postBody"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                rows: "5",
+                                name: "body",
+                                type: "text",
+                                id: "post-body"
+                              },
+                              domProps: { value: _vm.postBody },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.postBody = $event.target.value
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.errs.body
+                              ? _c("p", { staticClass: "text-danger" }, [
+                                  _vm._v(_vm._s(_vm.errs.body[0]))
+                                ])
+                              : _vm._e()
+                          ])
                         ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          on: { click: _vm.addNewPost }
+                        },
+                        [_vm._v("Add")]
                       )
-                    ]
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("Post")
-          ],
-          1
-        ),
+                    ])
+                  ]
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.arrPosts.length > 0
+            ? _c(
+                "div",
+                _vm._l(_vm.arrPosts, function(post) {
+                  return _c("Post", {
+                    key: "p" + post.id,
+                    attrs: {
+                      id: post.id,
+                      admin: _vm.admin,
+                      "user-id": post.user_id,
+                      title: post.title,
+                      body: post.body,
+                      src: post.src
+                    },
+                    on: { deleteditem: _vm.deletedItem }
+                  })
+                }),
+                1
+              )
+            : _vm._e()
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-4" })
       ])
@@ -38459,23 +38605,6 @@ var staticRenderFns = [
         [_vm._v("\n                        Add New Post\n                    ")]
       )
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "alert",
-          "aria-label": "Close"
-        }
-      },
-      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-    )
   }
 ]
 render._withStripped = true
@@ -38507,7 +38636,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "main-home py-md-5" }, [
-      _c("div", { staticClass: "row pt-md-5 mt-md-5 container mx-auto" }, [
+      _c("div", { staticClass: "row  mt-md-5 container mx-auto" }, [
         _c("div", { staticClass: "col-md-6 pt-md-5 showcase-title" }, [
           _c("h1", [
             _vm._v("For You "),
@@ -38529,7 +38658,7 @@ var staticRenderFns = [
         _c("div", { staticClass: "col-md-6 showcase-img d-none d-md-block" }, [
           _c("img", {
             staticClass: "ml-5",
-            attrs: { src: "/images/showcase.png", alt: "", width: "115%" }
+            attrs: { src: "/images/showcase.png", alt: "", width: "110%" }
           })
         ])
       ]),
@@ -38657,86 +38786,87 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "main-post mt-5" }, [
+    _c(
+      "div",
+      {
+        staticClass: "card rounded-0 border-0 shadow",
+        attrs: { width: "100%" }
+      },
+      [
+        _c("img", {
+          staticClass: "card-img-top rounded-0",
+          attrs: { src: /posts-images/ + _vm.src, alt: "img" }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("h5", { staticClass: "card-title mt-3 mt-md-5" }, [
+            _vm._v(_vm._s(_vm.title))
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "card-text" }, [_vm._v(_vm._s(_vm.body))]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mt-md-4 links" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("span", { staticClass: "mx-2" }),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _vm.admin
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger ml-3",
+                    on: {
+                      click: function($event) {
+                        return _vm.deletePost(_vm.id)
+                      }
+                    }
+                  },
+                  [_vm._v("Delete")]
+                )
+              : _vm._e()
+          ])
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "main-post mt-5" }, [
-      _c(
-        "div",
-        {
-          staticClass: "card rounded-0 border-0 shadow",
-          attrs: { width: "100%" }
-        },
-        [
-          _c("img", {
-            staticClass: "card-img-top rounded-0",
-            attrs: { src: "/images/b4.png", alt: "..." }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("h5", { staticClass: "card-title mt-3 mt-md-5" }, [
-              _vm._v("Google inks pact for new 35-storey office")
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "card-text" }, [
-              _vm._v(
-                "Some quick example text to build on the card title and make up the bulk of the card's content."
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "mt-md-4 links" }, [
-              _c("a", { staticClass: "card-link", attrs: { href: "#" } }, [
-                _c("img", {
-                  staticClass: "mr-1 pink",
-                  attrs: {
-                    src: "/ico/category-pink.svg",
-                    alt: "Category",
-                    width: "22px"
-                  }
-                }),
-                _vm._v(" "),
-                _c("img", {
-                  staticClass: "mr-1 grey",
-                  attrs: {
-                    src: "/ico/category.svg",
-                    alt: "Category",
-                    width: "22px"
-                  }
-                }),
-                _vm._v(" \n                    Travel. Life")
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "mx-2" }),
-              _vm._v(" "),
-              _c("a", { staticClass: "card-link", attrs: { href: "#" } }, [
-                _c("img", {
-                  staticClass: "mr-1 pink",
-                  attrs: {
-                    src: "/ico/comment-pink.svg",
-                    alt: "comments",
-                    width: "22px"
-                  }
-                }),
-                _vm._v(" "),
-                _c("img", {
-                  staticClass: "mr-1 grey",
-                  attrs: {
-                    src: "/ico/comment.svg",
-                    alt: "comments",
-                    width: "22px"
-                  }
-                }),
-                _vm._v(
-                  "                       \n                    03 Comments"
-                )
-              ])
-            ])
-          ])
-        ]
+    return _c("a", { staticClass: "card-link", attrs: { href: "#" } }, [
+      _c("img", {
+        staticClass: "mr-1 pink",
+        attrs: { src: "/ico/category-pink.svg", alt: "Category", width: "22px" }
+      }),
+      _vm._v(" "),
+      _c("img", {
+        staticClass: "mr-1 grey",
+        attrs: { src: "/ico/category.svg", alt: "Category", width: "22px" }
+      }),
+      _vm._v(" \n                    Travel. Life\n                ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { staticClass: "card-link", attrs: { href: "#" } }, [
+      _c("img", {
+        staticClass: "mr-1 pink",
+        attrs: { src: "/ico/comment-pink.svg", alt: "comments", width: "22px" }
+      }),
+      _vm._v(" "),
+      _c("img", {
+        staticClass: "mr-1 grey",
+        attrs: { src: "/ico/comment.svg", alt: "comments", width: "22px" }
+      }),
+      _vm._v(
+        "                       \n                    03 Comments\n                "
       )
     ])
   }

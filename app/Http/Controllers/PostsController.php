@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use Image;
+use File;
+use App\Post;
 
 class PostsController extends Controller
 {
@@ -39,8 +43,25 @@ class PostsController extends Controller
             'body' => 'required',
             'image' => 'nullable|mimes:jpeg,jpg,png,gif|max:50000'
         ]);
-
-        return $request;
+        if($request->image != ''){
+            $img = $request->file('image');
+            $imgName ='pos' . Auth::id() . time() . '.' . $img->extension(); 
+            $destination = 'posts-images';
+            if(!File::isDirectory($destination)){
+                File::makeDirectory($destination, 0777, true, true);   
+            }
+            $imgM = Image::make($img->path());
+            $imgM->orientate()->fit(1200, 700, function($constrain){
+                $constrain->aspectRatio();
+            })->save($destination. '/'. $imgName);           
+        }
+        $post = Post::create([
+            'user_id' => Auth::id(),
+            'title' => $request->title,
+            'body' => $request->body,
+            'src' => $request->image != '' ? ($imgName) : '',
+        ]);
+        return $post;
     }
 
     /**
@@ -84,7 +105,18 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        return 'destroy';
+    {   
+        $post = Post::findOrFail($id);
+        if(File::exists('posts-images/'.$post->src)){
+            File::delete('posts-images/'.$post->src);
+        }
+        $post->delete();
+        return $post;
+    }
+
+    public function getPosts(){
+
+        $posts = Post::All();
+        return $posts;
     }
 }

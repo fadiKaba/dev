@@ -18,25 +18,31 @@
                             <div class="card p-md-5 border-0 shadow">
                                 <div class="alert alert-warning alert-dismissible fade show" role="alert" v-if="errMessage != ''">
                                     {{errMessage}}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
-                                    </button>
+                                    </button> -->
                                 </div>
-                                <form action="">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert" v-if="successMessage != ''">
+                                    {{successMessage}}
+                                    <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button> -->
+                                </div>
+                                <form action="" ref="addPostForm">
                                     <div class="form-group">
                                         <label for="post-image">Chose an image</label>
-                                        <input class="form-control" type="file" id="post-image" @change="uploadImg">
+                                        <input class="form-control" name="image" type="file" id="post-image">
                                         <p class="text-danger" v-if="errs.image">{{errs.image[0]}}</p>
                                     </div> 
                                     <div class="form-group">
                                         <label for="post-title">Title</label>
-                                        <input class="form-control" type="text" id="post-title" v-model="postTitle">
+                                        <input class="form-control" name="title" type="text" id="post-title" v-model="postTitle">
                                         <p class="text-danger" v-if="errs.title">{{errs.title[0]}}</p>
                                     </div> 
                                     <div class="form-group">
                                         <label for="post-body">Body</label>
-                                        <textarea rows="5" class="form-control" type="text" id="post-body" v-model="postBody"></textarea>
-                                        <p class="text-danger" v-if="errs.body">{{errs.body[0]}}</p>
+                                        <textarea rows="5" name="body" class="form-control" type="text" id="post-body" v-model="postBody"></textarea>
+                                        <p class="text-danger"  v-if="errs.body">{{errs.body[0]}}</p>
                                     </div>                                
                                 </form>  
                                 <button class="btn btn-primary" @click="addNewPost">Add</button>                     
@@ -44,7 +50,22 @@
                         </div>
                     </div>                   
                     <!-- end admin new post -->
-                    <Post></Post>
+
+                    <!-- posts-->
+                    <div v-if=" arrPosts.length > 0">
+                        <Post 
+                        v-for="post in arrPosts" 
+                        :key="'p'+post.id" 
+                        :id="post.id" 
+                        :admin="admin"
+                        :user-id="post.user_id"
+                        :title="post.title"
+                        :body="post.body"
+                        :src="post.src"
+                        v-on:deleteditem="deletedItem"
+                        ></Post>
+                    </div>                   
+                    <!-- end posts -->
                 </div>
                 <div class="col-md-4"></div>
             </div>
@@ -64,12 +85,15 @@ export default {
             postImage:'',
             postTitle:'',
             postBody:'',
+            successMessage: '',
             errMessage:'',
             errs:'',
+            arrPosts:[],
         }
     },
     mounted: function(){
-      this.getUser()
+      this.getUser();
+      this.getPosts();
     },
     methods:{
         getUser: function(){
@@ -78,29 +102,64 @@ export default {
            if(response.data.is_admin == 1){
                this.admin = true;
            }
-        })//.catch((err) => console.log(err));
+        }).catch((err) => '');
       },
-      uploadImg: function(e){
-        let img = e.target.files[0];
-        this.postImage = new FormData();
-        this.postImage.append('image', img); 
-        console.log(img)
+      getPosts: function(){
+        axios.post('/getposts')
+        .then((response)=>{
+             this.makePostsArr(response.data);
+        })
+      },
+      makePostsArr: function(arr){  
+          class Post {
+
+           constructor(element){
+                   this.id = element.id;
+                   this.userId = element.user_id;
+                   this.src = element.src;
+                   this.title = element.title;
+                   this.body = element.body;
+                }
+
+                static obj (){
+                    return {userId: this.userId, src: this.src, title: this.title, body: this.body}
+                }
+          }        
+          arr.forEach(element => {
+              let objPostReady = new Post(element);
+              this.arrPosts.unshift(objPostReady)
+          });
       },
       addNewPost: function(){
-          axios.post('/post', {
-              title: this.postTitle,
-              body: this.postBody,
-              image: this.postImage
-          }).then((response) => {
+          let postFormData = new FormData(this.$refs.addPostForm)
+          axios({
+            method: 'post',
+            url: '/post',
+            data: postFormData,
+            config: { headers: {'Content-Type': 'multipart/form-data' }}
+            }).then((response) => {
               this.errMessage = '';
               this.errs = '';
-              console.log(response)
+              this.makePostsArr([response.data]);
+              this.postTitle = '';
+              this.postBody= '';
+              document.querySelector('#post-image').value = null;
+              this.successMessage = 'New post added successfully'
+              
+              
           }).catch((err) => {
               if(err.response){
                  this.errMessage = err.response.data.message;
                  this.errs =  err.response.data.errors
               }            
           })
+      },
+      deletedItem: function(val){
+          for(let i = 0; i < this.arrPosts.length; i++){
+              if(this.arrPosts[i].id == val.id){
+                  this.arrPosts.splice(i, 1);
+              }
+          }
       }  
     }
 }

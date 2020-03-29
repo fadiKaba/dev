@@ -21,6 +21,15 @@ Route::post('/getuser', 'AppController@getUser');
 
 Auth::routes();
 
-Route::group(['middleware' => ['admin']], function(){
-    Route::resource('/post', 'PostsController');
+Route::post('/getposts', 'PostsController@getPosts');
+
+Route::group(['middleware' => ['auth']], function(){
+    
+    Route::group(['middleware' => ['admin']], function(){ 
+
+        Route::resource('/post', 'PostsController');
+
+    });
 });
+
+

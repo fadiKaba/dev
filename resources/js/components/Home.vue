@@ -1,6 +1,6 @@
 <template>
        <div class="main-home py-md-5">
-           <div class="row pt-md-5 mt-md-5 container mx-auto">
+           <div class="row  mt-md-5 container mx-auto">
                <div class="col-md-6 pt-md-5 showcase-title">
                    <h1>For You <br> Development Service</h1>
                    <p class="pb-5">
@@ -10,7 +10,7 @@
                    <button class="btn showcase-btn">Descover More</button>
                </div>
                <div class="col-md-6 showcase-img d-none d-md-block">
-                   <img class="ml-5" src="/images/showcase.png" alt="" width="115%">
+                   <img class="ml-5" src="/images/showcase.png" alt="" width="110%">
                </div>
            </div>
            <div class="container mx-auto showcase2 py-5 mt-md-5">
