@@ -28,22 +28,49 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button> -->
                                 </div>
-                                <form action="" ref="addPostForm">
+                                <form action="" ref="addPostForm" class="was-validated">
                                     <div class="form-group">
                                         <label for="post-image">Chose an image</label>
-                                        <input class="form-control" name="image" type="file" id="post-image">
+                                        <input class="form-control" name="image" type="file" id="post-image" accept="image/*">                                       
                                         <p class="text-danger" v-if="errs.image">{{errs.image[0]}}</p>
                                     </div> 
                                     <div class="form-group">
                                         <label for="post-title">Title</label>
-                                        <input class="form-control" name="title" type="text" id="post-title" v-model="postTitle">
+                                        <input class="form-control is-invalid" name="title" type="text" required id="post-title" v-model="postTitle">
                                         <p class="text-danger" v-if="errs.title">{{errs.title[0]}}</p>
                                     </div> 
                                     <div class="form-group">
                                         <label for="post-body">Body</label>
-                                        <textarea rows="5" name="body" class="form-control" type="text" id="post-body" v-model="postBody"></textarea>
+                                        <textarea rows="5" name="body" class="form-control is-invalid" required type="text" id="post-body" v-model="postBody"></textarea>
                                         <p class="text-danger"  v-if="errs.body">{{errs.body[0]}}</p>
-                                    </div>                                
+                                    </div> 
+                                    <div class="form-row">
+                                        <div class="col-12 text-center"><p>Category</p></div>                                       
+                                         <div class="col-md-6 mb-3">                                            
+                                            <select class="custom-select" name="category1" required>
+                                                <option selected disabled value="">Choose...</option>
+                                                <option value="0">Food</option>
+                                                <option value="1">Health</option>
+                                                <option value="2">Travel</option>
+                                                <option value="3">Lifestyle</option>
+                                                <option value="4">Technology</option>
+                                                <option value="5">Inspiration</option>
+                                                <option value="6">Products</option>
+                                            </select>
+                                         </div>
+                                         <div class="col-md-6 mb-3">
+                                            <select class="custom-select" name="category2">
+                                                <option selected disabled value="">Choose...</option>
+                                                <option value="0">Food</option>
+                                                <option value="1">Health</option>
+                                                <option value="2">Travel</option>
+                                                <option value="3">Lifestyle</option>
+                                                <option value="4">Technology</option>
+                                                <option value="5">Inspiration</option>
+                                                <option value="6">Products</option>
+                                            </select>
+                                         </div>
+                                    </div>                            
                                 </form>  
                                 <button class="btn btn-primary" @click="addNewPost">Add</button>                     
                             </div>                          
@@ -62,6 +89,8 @@
                         :title="post.title"
                         :body="post.body"
                         :src="post.src"
+                        :category1="post.category1"
+                        :category2="post.category2"
                         v-on:deleteditem="deletedItem"
                         ></Post>
                     </div>                   
@@ -119,6 +148,8 @@ export default {
                    this.src = element.src;
                    this.title = element.title;
                    this.body = element.body;
+                   this.category1 = element.category1,
+                   this.category2 = element.category2
                 }
 
                 static obj (){
@@ -131,7 +162,7 @@ export default {
           });
       },
       addNewPost: function(){
-          let postFormData = new FormData(this.$refs.addPostForm)
+          let postFormData = new FormData(this.$refs.addPostForm);
           axios({
             method: 'post',
             url: '/post',
@@ -144,13 +175,11 @@ export default {
               this.postTitle = '';
               this.postBody= '';
               document.querySelector('#post-image').value = null;
-              this.successMessage = 'New post added successfully'
-              
-              
+              this.successMessage = 'New post added successfully'                          
           }).catch((err) => {
               if(err.response){
                  this.errMessage = err.response.data.message;
-                 this.errs =  err.response.data.errors
+                // this.errs =  err.response.data.errors
               }            
           })
       },

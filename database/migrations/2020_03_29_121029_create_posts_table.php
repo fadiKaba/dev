@@ -19,7 +19,8 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->longText('body');
             $table->string('src')->nullable();
-            $table->string('likes')->nullable();
+            $table->integer('category1');
+            $table->integer('category2')->nullable();
             $table->timestamps();
         });
     }

@@ -1989,6 +1989,35 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Blog',
@@ -2042,6 +2071,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           this.src = element.src;
           this.title = element.title;
           this.body = element.body;
+          this.category1 = element.category1, this.category2 = element.category2;
         }
 
         _createClass(Post, null, [{
@@ -2090,8 +2120,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         _this4.successMessage = 'New post added successfully';
       })["catch"](function (err) {
         if (err.response) {
-          _this4.errMessage = err.response.data.message;
-          _this4.errs = err.response.data.errors;
+          _this4.errMessage = err.response.data.message; // this.errs =  err.response.data.errors
         }
       });
     },
@@ -2241,10 +2270,68 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Post',
-  props: ['admin', 'id', 'userId', 'title', 'body', 'src'],
+  props: ['admin', 'id', 'userId', 'title', 'body', 'src', 'category1', 'category2'],
+  data: function data() {
+    return {
+      titleVar: this.title,
+      bodyVar: this.body,
+      srcVar: this.src,
+      category1Val: this.category1,
+      category2Val: this.category2,
+      editMode: false,
+      successMessage: '',
+      errMessage: '',
+      errs: '',
+      categories: ['Food', 'Health', 'Travel', 'Lifestyle', 'Technology', 'Inspiration', 'Products']
+    };
+  },
   mounted: function mounted() {},
   methods: {
     deletePost: function deletePost(postId) {
@@ -2255,6 +2342,39 @@ __webpack_require__.r(__webpack_exports__);
       if (ask) {
         axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("/post/".concat(postId)).then(function (response) {
           _this.$emit('deleteditem', response.data);
+        });
+      }
+    },
+    showEdit: function showEdit() {
+      this.editMode = !this.editMode;
+    },
+    postUpdate: function postUpdate(postId) {
+      var _this2 = this;
+
+      var saveChanges = confirm('Save your changes ?');
+
+      if (saveChanges) {
+        var pFD = new FormData(document.querySelector('#pfd' + this.id));
+        axios__WEBPACK_IMPORTED_MODULE_0___default()({
+          method: 'post',
+          url: "post/".concat(postId),
+          data: pFD,
+          config: {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        }).then(function (response) {
+          _this2.titleVar = response.data.title;
+          _this2.bodyVar = response.data.body;
+          _this2.srcVar = response.data.src;
+          _this2.editMode = false;
+          _this2.successMessage = 'Post updated successfuly';
+        })["catch"](function (err) {
+          if (err.response) {
+            _this2.errMessage = err.response.data.message;
+            _this2.errs = err.response.data.errors;
+          }
         });
       }
     }
@@ -38429,7 +38549,11 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "form",
-                        { ref: "addPostForm", attrs: { action: "" } },
+                        {
+                          ref: "addPostForm",
+                          staticClass: "was-validated",
+                          attrs: { action: "" }
+                        },
                         [
                           _c("div", { staticClass: "form-group" }, [
                             _c("label", { attrs: { for: "post-image" } }, [
@@ -38441,7 +38565,8 @@ var render = function() {
                               attrs: {
                                 name: "image",
                                 type: "file",
-                                id: "post-image"
+                                id: "post-image",
+                                accept: "image/*"
                               }
                             }),
                             _vm._v(" "),
@@ -38466,10 +38591,11 @@ var render = function() {
                                   expression: "postTitle"
                                 }
                               ],
-                              staticClass: "form-control",
+                              staticClass: "form-control is-invalid",
                               attrs: {
                                 name: "title",
                                 type: "text",
+                                required: "",
                                 id: "post-title"
                               },
                               domProps: { value: _vm.postTitle },
@@ -38504,10 +38630,11 @@ var render = function() {
                                   expression: "postBody"
                                 }
                               ],
-                              staticClass: "form-control",
+                              staticClass: "form-control is-invalid",
                               attrs: {
                                 rows: "5",
                                 name: "body",
+                                required: "",
                                 type: "text",
                                 id: "post-body"
                               },
@@ -38527,7 +38654,9 @@ var render = function() {
                                   _vm._v(_vm._s(_vm.errs.body[0]))
                                 ])
                               : _vm._e()
-                          ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(2)
                         ]
                       ),
                       _vm._v(" "),
@@ -38557,7 +38686,9 @@ var render = function() {
                       "user-id": post.user_id,
                       title: post.title,
                       body: post.body,
-                      src: post.src
+                      src: post.src,
+                      category1: post.category1,
+                      category2: post.category2
                     },
                     on: { deleteditem: _vm.deletedItem }
                   })
@@ -38604,6 +38735,71 @@ var staticRenderFns = [
         },
         [_vm._v("\n                        Add New Post\n                    ")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-row" }, [
+      _c("div", { staticClass: "col-12 text-center" }, [
+        _c("p", [_vm._v("Category")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6 mb-3" }, [
+        _c(
+          "select",
+          {
+            staticClass: "custom-select",
+            attrs: { name: "category1", required: "" }
+          },
+          [
+            _c("option", { attrs: { selected: "", disabled: "", value: "" } }, [
+              _vm._v("Choose...")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "0" } }, [_vm._v("Food")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "1" } }, [_vm._v("Health")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "2" } }, [_vm._v("Travel")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "3" } }, [_vm._v("Lifestyle")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "4" } }, [_vm._v("Technology")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "5" } }, [_vm._v("Inspiration")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "6" } }, [_vm._v("Products")])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6 mb-3" }, [
+        _c(
+          "select",
+          { staticClass: "custom-select", attrs: { name: "category2" } },
+          [
+            _c("option", { attrs: { selected: "", disabled: "", value: "" } }, [
+              _vm._v("Choose...")
+            ]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "0" } }, [_vm._v("Food")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "1" } }, [_vm._v("Health")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "2" } }, [_vm._v("Travel")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "3" } }, [_vm._v("Lifestyle")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "4" } }, [_vm._v("Technology")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "5" } }, [_vm._v("Inspiration")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "6" } }, [_vm._v("Products")])
+          ]
+        )
+      ])
     ])
   }
 ]
@@ -38796,36 +38992,206 @@ var render = function() {
       [
         _c("img", {
           staticClass: "card-img-top rounded-0",
-          attrs: { src: /posts-images/ + _vm.src, alt: "img" }
+          attrs: { src: /posts-images/ + _vm.srcVar, alt: "img" }
         }),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
-          _c("h5", { staticClass: "card-title mt-3 mt-md-5" }, [
-            _vm._v(_vm._s(_vm.title))
-          ]),
+          _vm.successMessage != ""
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "alert alert-success alert-dismissible fade show",
+                  attrs: { role: "alert" }
+                },
+                [
+                  _vm._v(
+                    "\n            " +
+                      _vm._s(_vm.successMessage) +
+                      "\n            "
+                  ),
+                  _vm._m(0)
+                ]
+              )
+            : _vm._e(),
           _vm._v(" "),
-          _c("p", { staticClass: "card-text" }, [_vm._v(_vm._s(_vm.body))]),
+          _vm.errMessage != ""
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "alert alert-warning alert-dismissible fade show",
+                  attrs: { role: "alert" }
+                },
+                [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(_vm.errMessage) +
+                      "\n                "
+                  ),
+                  _vm._m(1)
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "form",
+            {
+              class: _vm.editMode ? "d-block" : "d-none",
+              attrs: { action: "", id: "pfd" + _vm.id }
+            },
+            [
+              _c("input", {
+                attrs: { type: "hidden", name: "_method", value: "PUT" }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "post-image" } }, [
+                  _vm._v("Image")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { id: "post-image", type: "file", name: "image" }
+                }),
+                _vm._v(" "),
+                _vm.errs.image
+                  ? _c("p", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errs.image[0]))
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "post-title" } }, [
+                  _vm._v("Title")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  staticClass: "form-control",
+                  attrs: { id: "post-title", type: "text", name: "title" },
+                  domProps: { value: _vm.titleVar }
+                }),
+                _vm._v(" "),
+                _vm.errs.title
+                  ? _c("p", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errs.title[0]))
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "post-body" } }, [_vm._v("Body")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  staticClass: "form-control",
+                  attrs: { id: "post-body", name: "body" },
+                  domProps: { value: _vm.bodyVar }
+                }),
+                _vm._v(" "),
+                _vm.errs.body
+                  ? _c("p", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errs.body[0]))
+                    ])
+                  : _vm._e()
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              class: _vm.editMode
+                ? "d-block btn btn-secondary"
+                : "d-none btn btn-secondary",
+              on: {
+                click: function($event) {
+                  return _vm.postUpdate(_vm.id)
+                }
+              }
+            },
+            [_vm._v("Save")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              class: _vm.editMode ? "d-none" : "d-block",
+              attrs: { id: "post-content" + _vm.id }
+            },
+            [
+              _c("h5", { staticClass: "card-title mt-3 mt-md-5" }, [
+                _vm._v(_vm._s(_vm.titleVar))
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "card-text" }, [
+                _vm._v(_vm._s(_vm.bodyVar))
+              ])
+            ]
+          ),
           _vm._v(" "),
           _c("div", { staticClass: "mt-md-4 links" }, [
-            _vm._m(0),
+            _c("a", { staticClass: "card-link", attrs: { href: "#" } }, [
+              _c("img", {
+                staticClass: "mr-1 pink",
+                attrs: {
+                  src: "/ico/category-pink.svg",
+                  alt: "Category",
+                  width: "22px"
+                }
+              }),
+              _vm._v(" "),
+              _c("img", {
+                staticClass: "mr-1 grey",
+                attrs: {
+                  src: "/ico/category.svg",
+                  alt: "Category",
+                  width: "22px"
+                }
+              }),
+              _vm._v(
+                " \n                    " +
+                  _vm._s(
+                    _vm.categories[_vm.category1] +
+                      ". " +
+                      _vm.categories[_vm.category2]
+                  ) +
+                  "\n                "
+              )
+            ]),
             _vm._v(" "),
             _c("span", { staticClass: "mx-2" }),
             _vm._v(" "),
-            _vm._m(1),
+            _vm._m(2),
             _vm._v(" "),
             _vm.admin
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger ml-3",
-                    on: {
-                      click: function($event) {
-                        return _vm.deletePost(_vm.id)
+              ? _c("div", { staticClass: "mt-3" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-dark ml-3",
+                      on: {
+                        click: function($event) {
+                          return _vm.showEdit()
+                        }
                       }
-                    }
-                  },
-                  [_vm._v("Delete")]
-                )
+                    },
+                    [_vm._v("Edit")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger ml-3",
+                      on: {
+                        click: function($event) {
+                          return _vm.deletePost(_vm.id)
+                        }
+                      }
+                    },
+                    [_vm._v("Delete")]
+                  )
+                ])
               : _vm._e()
           ])
         ])
@@ -38838,18 +39204,35 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "card-link", attrs: { href: "#" } }, [
-      _c("img", {
-        staticClass: "mr-1 pink",
-        attrs: { src: "/ico/category-pink.svg", alt: "Category", width: "22px" }
-      }),
-      _vm._v(" "),
-      _c("img", {
-        staticClass: "mr-1 grey",
-        attrs: { src: "/ico/category.svg", alt: "Category", width: "22px" }
-      }),
-      _vm._v(" \n                    Travel. Life\n                ")
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "alert",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "alert",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   },
   function() {
     var _vm = this

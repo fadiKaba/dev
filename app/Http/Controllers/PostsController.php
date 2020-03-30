@@ -41,8 +41,11 @@ class PostsController extends Controller
         $request->validate([
             'title' => 'required|max:300',
             'body' => 'required',
-            'image' => 'nullable|mimes:jpeg,jpg,png,gif|max:50000'
+            'image' => 'nullable|mimes:jpeg,jpg,png,gif|max:50000',
+            'category1' => 'required',
+            'category2' => ''
         ]);
+
         if($request->image != ''){
             $img = $request->file('image');
             $imgName ='pos' . Auth::id() . time() . '.' . $img->extension(); 
@@ -60,6 +63,8 @@ class PostsController extends Controller
             'title' => $request->title,
             'body' => $request->body,
             'src' => $request->image != '' ? ($imgName) : '',
+            'category1' => $request->category1, 
+            'category2' => $request->category2 == '' ? null : $request->category2
         ]);
         return $post;
     }
@@ -94,8 +99,40 @@ class PostsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        return 'update';
+    {   
+        $request->validate([
+            'title' => 'required|max:300',
+            'body' => 'required',
+            'image' => 'nullable|mimes:jpeg,jpg,png,gif|max:50000'
+        ]);
+
+        $post = Post::findOrFail($id);
+        
+        if($request->image != ''){
+            if(File::exists('posts-images/'.$post->src)){
+                File::delete('posts-images/'.$post->src);
+            }
+            $img = $request->file('image');
+            $imgName ='pos' . Auth::id() . time() . '.' . $img->extension(); 
+            $destination = 'posts-images';
+            if(!File::isDirectory($destination)){
+                File::makeDirectory($destination, 0777, true, true);   
+            }
+            $imgM = Image::make($img->path());
+            $imgM->orientate()->fit(1200, 700, function($constrain){
+                $constrain->aspectRatio();
+            })->save($destination. '/'. $imgName); 
+            $post->update([
+                'src' =>  $imgName,
+            ]);
+        }
+        
+        $post->update([
+            'title' => $request->title,
+            'body' => $request->body, 
+        ]);
+
+        return $post;
     }
 
     /**
