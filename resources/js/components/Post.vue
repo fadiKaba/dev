@@ -1,5 +1,5 @@
 <template>
-    <div class="main-post mt-5">
+    <div class="main-post">
         <div class="card rounded-0 border-0 shadow" width="100%">
             
             <img :src="'/posts-images/'+srcVar" class="card-img-top rounded-0" alt="img">
