@@ -15,7 +15,7 @@
                         </p>
                         <div class="collapse" id="collapseExample">
                                                       
-                            <div class="card p-md-5 border-0 shadow">
+                            <div class="card p-2 p-md-5 border-0 shadow">
                                 <div class="alert alert-warning alert-dismissible fade show" role="alert" v-if="errMessage != ''">
                                     {{errMessage}}
                                     <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -91,6 +91,7 @@
                         :src="post.src"
                         :category1="post.category1"
                         :category2="post.category2"
+                        :createdAt="post.created_at"
                         v-on:deleteditem="deletedItem"
                         ></Post>
                     </div>                   
@@ -149,7 +150,8 @@ export default {
                    this.title = element.title;
                    this.body = element.body;
                    this.category1 = element.category1,
-                   this.category2 = element.category2
+                   this.category2 = element.category2,
+                   this.createdAt = element.created_at
                 }
 
                 static obj (){

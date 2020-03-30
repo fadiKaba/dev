@@ -1,0 +1,189 @@
+<template>
+    <div class="main-post mt-5">
+        <div class="card rounded-0 border-0" width="100%">
+            
+            <img :src="'/posts-images/'+src" class="card-img-top rounded-0" alt="img">
+            <div class="">
+               <div :id="'post-content'">
+                   <h5 class="card-title mt-2 mt-md-3">{{title}}</h5>
+                   <div class="mt-2 mb-3 links">
+                        <a href="#" class="card-link">
+                            <img class="mr-md-1 pink" src="/ico/category-pink.svg" alt="Category" width="22px"> 
+                            <img class="mr-md-1 grey" src="/ico/category.svg" alt="Category" width="22px"> 
+                            {{categories[category1] + '. ' + (categories[category2]  != undefined ? categories[category2] : '')}}
+                        </a>
+                        <span class="mx-md-2"></span>
+                        <a href="#" class="card-link">
+                            <img class="mr-md-1 pink" src="/ico/comment-pink.svg" alt="comments" width="22px">
+                            <img class="mr-md-1 grey" src="/ico/comment.svg" alt="comments" width="22px">                       
+                            03 Comments
+                        </a>       
+                   </div>
+                   <p class="card-text">{{body}}</p>                   
+               </div>
+                          
+            </div>
+        </div>
+    </div>    
+</template>
+<script>
+
+import axios from 'axios';
+
+export default {
+    name: 'Singlepost',
+    props:['postid'],
+    data: function(){
+        return {
+        moment: require('moment'),
+        title:'',
+        body: '',
+        src: '',
+        category1:'',
+        category2: '',
+        createdAt:'',
+        categories:['Food', 'Health', 'Travel', 'Lifestyle', 'Technology', 'Inspiration', 'Products'],
+        }
+    },
+    mounted: function(){
+        this.getPost(this.postid);
+        console.log(this.category2 + ' <-----')
+    },
+    methods:{
+        getPost: function(id){
+            axios.post(`/getsinglepost/${id}`)
+            .then((response) => {
+                let pos = response.data
+                this.title = pos.title;
+                this.body = pos.body;
+                this.src = pos.src;
+                this.createdAt = pos.created_at;
+                this.category1 = pos.category1;
+                this.category2 = pos.category2;
+            })
+        }
+    }
+
+}
+</script>
+<style lang="scss" scoped>
+.main-post{
+    .card{     
+        .date{
+            margin-top: -80px;
+            margin-left:50px;
+            border-radius: 7px;
+            background-color: #FF5C97;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            align-items: center;
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            p:nth-child(1){
+                font-size: 30px;
+                color: #fff;
+                font-weight: 600;
+            }
+            p:nth-child(2){
+                font-size: 18px;
+                color: #fff;
+                font-weight: 400;
+            }
+            
+        }         
+           h5{
+            transition: 0.3s;
+            display: inline-block;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2B4B80;
+            }    
+        p{
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: #707B92;
+        }
+        .links{
+            a{  
+                transition: 0.1s;
+                color: #707B92;
+                .pink{
+                     display: none;
+                }
+                &:hover{
+                    color: #EC4683;
+                    .grey {                       
+                        display: none;
+                    }
+                    .pink {
+                        display: inline-block;
+                    }
+                }             
+            }
+            span{
+                display:inline-block;
+                height: 12px;
+                width:1.5px;
+                border-right: 1.5px solid #000;
+            }
+        }
+     }
+}  
+
+
+
+
+
+
+
+
+@media screen and (max-width:500px){
+
+
+   .main-post{
+    .card{     
+        .date{
+            margin-top: -55px;
+            margin-left:10px;
+            border-radius: 5px;
+            width: 60px;
+            height: 70px;
+            p:nth-child(1){
+                font-size: 20px;
+                color: #fff;
+                font-weight: 600;
+            }
+            p:nth-child(2){
+                font-size: 14px;
+                color: #fff;
+                font-weight: 400;
+            }
+            
+        }
+         h5{
+            font-size: 1.3rem;
+            font-weight: 500;
+            }
+        .links{
+            a{  
+                transition: 0.1s;
+                font-size: 0.8rem;
+                img{
+                    transform: scale(0.8);
+                }
+            }
+            span{
+                display:inline-block;
+                height: 12px;
+                width:1.5px;
+                border-right: 1.5px solid #000;
+            }
+        }
+     }
+}  
+
+
+}
+</style>

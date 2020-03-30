@@ -12,10 +12,12 @@ import VueRouter from 'vue-router';
 
 import Home from './components/Home';
 import Blog from './components/Blog';
+import Singleblog from './components/Singleblog';
 
 
 Vue.use(VueRouter)
 
+Vue.use(require('vue-moment'));
 // const app = new Vue({
 //     el: '#app',
 // });
@@ -25,7 +27,8 @@ Vue.use(VueRouter)
 
 const routes = [
   {path: '/', name: 'home', component: Home},
-  {path: '/blog', component: Blog}
+  {path: '/blog', component: Blog},
+  {path: '/singleblog/:postid', name: 'Singleblog', component: Singleblog, props: true}
 ];
 
 

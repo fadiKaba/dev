@@ -2,10 +2,12 @@
     <div class="main-post mt-5">
         <div class="card rounded-0 border-0 shadow" width="100%">
             
-            <img :src="/posts-images/+srcVar" class="card-img-top rounded-0" alt="img"> 
-            
+            <img :src="'/posts-images/'+srcVar" class="card-img-top rounded-0" alt="img">
+            <div class="date">
+                <p class="text-center mt-2 mb-0">{{moment(createdAt).format('D')}}</p>
+                <p class="text-center">{{moment(createdAt).format('MMM')}}</p>
+            </div> 
             <div class="card-body">
-
                 <div class="alert alert-success alert-dismissible fade show" role="alert" v-if="successMessage != ''">
                 {{successMessage}}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -41,21 +43,20 @@
                 
 
                <div :id="'post-content'+id" :class="editMode ? 'd-none': 'd-block'">
-                   <h5 class="card-title mt-3 mt-md-5">{{titleVar}}</h5>
-                   <p class="card-text">{{bodyVar}}</p>
+                   <router-link :to="'/singleblog/'+id"><h5 class="card-title mt-2 mt-md-3">{{titleVar}}</h5></router-link>
+                   <p class="card-text" v-html="limitString(bodyVar, 200, id)"></p>
                </div>
-                
 
-                <div class="mt-md-4 links">
+                <div class="mt-3 mt-md-4 links">
                     <a href="#" class="card-link">
-                        <img class="mr-1 pink" src="/ico/category-pink.svg" alt="Category" width="22px"> 
-                        <img class="mr-1 grey" src="/ico/category.svg" alt="Category" width="22px"> 
-                        {{categories[category1]+ '. ' + categories[category2]}}
+                        <img class="mr-md-1 pink" src="/ico/category-pink.svg" alt="Category" width="22px"> 
+                        <img class="mr-md-1 grey" src="/ico/category.svg" alt="Category" width="22px"> 
+                        {{categories[category1]+ '. ' + (categories[category2]  != undefined ? categories[category2] : '')}}
                     </a>
-                    <span class="mx-2"></span>
+                    <span class="mx-md-2"></span>
                     <a href="#" class="card-link">
-                        <img class="mr-1 pink" src="/ico/comment-pink.svg" alt="comments" width="22px">
-                        <img class="mr-1 grey" src="/ico/comment.svg" alt="comments" width="22px">                       
+                        <img class="mr-md-1 pink" src="/ico/comment-pink.svg" alt="comments" width="22px">
+                        <img class="mr-md-1 grey" src="/ico/comment.svg" alt="comments" width="22px">                       
                         03 Comments
                     </a>
                     <div v-if="admin" class="mt-3">
@@ -73,7 +74,7 @@ import axios from 'axios';
 
 export default {
     name: 'Post',
-    props: ['admin', 'id', 'userId', 'title', 'body', 'src', 'category1', 'category2'],
+    props: ['admin', 'id', 'userId', 'title', 'body', 'src', 'category1', 'category2', 'createdAt'],
     data: function(){
         return{
           titleVar: this.title,
@@ -86,6 +87,7 @@ export default {
           errMessage:'',
           errs:'',
           categories:['Food', 'Health', 'Travel', 'Lifestyle', 'Technology', 'Inspiration', 'Products'],
+          moment: require('moment')
         }
     },
     mounted:function(){
@@ -128,18 +130,63 @@ export default {
                 })
             }
              
-        }
+        },
+        limitString(str, limit, postId){
+           let dot = ` ...<a href="/posts/postDetail/${postId}"> read more</a>`;
+           if(str.length > limit){
+              let string = str.substring(0, limit) + dot;
+              return string
+               
+           }
+           return str;
+        }, 
     }
 }
 </script>
 <style lang="scss" scoped>
 .main-post{
-    .card{
-         h5{
+    .card{     
+        .date{
+            margin-top: -80px;
+            margin-left:50px;
+            border-radius: 7px;
+            background-color: #FF5C97;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            align-items: center;
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            p:nth-child(1){
+                font-size: 30px;
+                color: #fff;
+                font-weight: 600;
+            }
+            p:nth-child(2){
+                font-size: 18px;
+                color: #fff;
+                font-weight: 400;
+            }
+            
+        }
+        a{
+           
+           h5{
+            transition: 0.3s;
+            display: inline-block;
             font-size: 1.5rem;
             font-weight: 600;
             color: #2B4B80;
+            &:hover{
+                color: #EC4683;
             }
+            } 
+            &:hover{
+                text-decoration: none;
+            }
+        }
+         
         p{
             font-size: 1.05rem;
             font-weight: 400;
@@ -171,4 +218,59 @@ export default {
         }
      }
 }  
+
+
+
+
+
+
+
+
+@media screen and (max-width:500px){
+
+
+   .main-post{
+    .card{     
+        .date{
+            margin-top: -55px;
+            margin-left:10px;
+            border-radius: 5px;
+            width: 60px;
+            height: 70px;
+            p:nth-child(1){
+                font-size: 20px;
+                color: #fff;
+                font-weight: 600;
+            }
+            p:nth-child(2){
+                font-size: 14px;
+                color: #fff;
+                font-weight: 400;
+            }
+            
+        }
+         h5{
+            font-size: 1.3rem;
+            font-weight: 500;
+            }
+        .links{
+            a{  
+                transition: 0.1s;
+                font-size: 0.8rem;
+                img{
+                    transform: scale(0.8);
+                }
+            }
+            span{
+                display:inline-block;
+                height: 12px;
+                width:1.5px;
+                border-right: 1.5px solid #000;
+            }
+        }
+     }
+}  
+
+
+}
 </style>

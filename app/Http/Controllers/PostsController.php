@@ -156,4 +156,9 @@ class PostsController extends Controller
         $posts = Post::All();
         return $posts;
     }
+
+    public function getSinglePost($postId){
+        $post = Post::findOrFail($postId);
+        return $post;
+    }
 }

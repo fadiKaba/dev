@@ -22,6 +22,7 @@ Route::post('/getuser', 'AppController@getUser');
 Auth::routes();
 
 Route::post('/getposts', 'PostsController@getPosts');
+Route::post('/getsinglepost/{postId}', 'PostsController@getSinglePost');
 
 Route::group(['middleware' => ['auth']], function(){
     
