@@ -13,7 +13,7 @@
                     <!-- end posts -->
                 </div>
                 <div class="col-md-4">
-                    <Searchpost></Searchpost>
+                    <Searchpost :single="true"></Searchpost>
                 </div>
             </div>
         </div>

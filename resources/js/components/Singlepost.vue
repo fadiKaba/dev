@@ -61,9 +61,13 @@ export default {
                 this.category2 = pos.category2;
             })
         }
+    },
+    watch:{
+      postid: function(newVal, oldVal){
+          this.getPost(newVal);
+      }
     }
-
-}//this.$forceUpdate();
+}
 </script>
 <style lang="scss" scoped>
 .main-post{

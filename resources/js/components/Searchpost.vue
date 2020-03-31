@@ -27,7 +27,10 @@
                   </p>
               </div>
           </div>
-          <button class="btn mt-3">Search</button>
+          <div>
+              <router-link v-if="single" class="btn mt-3 all" to="/blog">All</router-link>
+              <button v-else class="btn mt-3" @click="searchPost(value), manyResults = results">Search</button>
+          </div>
       </div>
 </template>
 <script>
@@ -36,16 +39,18 @@ import axios from 'axios';
 
 export default {
     name: 'Searchpost',
+    props:['single'],
     data: function(){
         return{
           searching: false,
           value: '',
           results:'',
+          manyResults:''
         }
     },
     methods:{
         searchPost: function(val){
-            if(this.value.length > 0){
+            if(this.value.length > 2){
                 this.searching = true;
             axios.post(`/searchpost/${val}`)
             .then((response) => {
@@ -57,6 +62,11 @@ export default {
             }            
         }
     },
+    watch:{
+        manyResults: function(newVal, oldVal){
+            this.$emit('searchresults',newVal)
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
@@ -77,7 +87,7 @@ export default {
                  }                
              }
          }
-         button{
+         button, .all{
            width:100%;
            height: 60px;
            border-radius: 0;
@@ -89,6 +99,9 @@ export default {
                background-color: #FF5C97;
                color:#fff;
            }
+         }
+         .all{
+             height: auto;
          }
          .search-results{
              position: relative;

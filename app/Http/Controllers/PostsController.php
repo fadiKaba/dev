@@ -168,4 +168,10 @@ class PostsController extends Controller
         $results = Post::where('title', 'LIKE', "%$val%")->get();
         return $results;
     }
+
+    public function searchCat($val){
+
+        $result = Post::where('category1', $val)->get();
+        return $result;
+    }
 }
