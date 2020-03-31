@@ -2785,6 +2785,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2795,6 +2800,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['postid'],
   data: function data() {
     return {
+      user: '',
       auth: false,
       moment: __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"),
       title: '',
@@ -2803,13 +2809,16 @@ __webpack_require__.r(__webpack_exports__);
       category1: '',
       category2: '',
       likes: '',
+      likedUsers: '',
+      sentence: '',
+      didLike: false,
       createdAt: '',
       categories: ['Food', 'Health', 'Travel', 'Lifestyle', 'Technology', 'Inspiration', 'Products']
     };
   },
+  created: function created() {},
   mounted: function mounted() {
     this.getPost(this.postid);
-    this.getUser();
   },
   methods: {
     getPost: function getPost(id) {
@@ -2820,10 +2829,16 @@ __webpack_require__.r(__webpack_exports__);
         _this.title = pos.title;
         _this.body = pos.body;
         _this.src = pos.src;
-        _this.likes = pos.likes;
+        _this.likes = pos.likes.split(',');
         _this.createdAt = pos.created_at;
         _this.category1 = pos.category1;
         _this.category2 = pos.category2;
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/getlikedusers/".concat(_this.likes)).then(function (response) {
+          _this.likedUsers = response.data;
+          _this.sentence = _this.likedUsers.length == 1 ? "".concat(_this.likedUsers[0].name, " like this") : "".concat(_this.likedUsers[_this.likedUsers.length - 1].name, " and ").concat(_this.likedUsers.length - 1, " people like this");
+
+          _this.getUser();
+        });
       });
     },
     getUser: function getUser() {
@@ -2831,15 +2846,28 @@ __webpack_require__.r(__webpack_exports__);
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/getuser').then(function (response) {
         if (response.data != '') {
+          _this2.user = response.data;
           _this2.auth = true;
+
+          if (_this2.likes.includes(_this2.user.id.toString())) {
+            _this2.didLike = true;
+          } else {
+            _this2.didLike = false;
+          }
         }
       })["catch"](function (err) {
         return '';
       });
     },
     like: function like(postId) {
+      var _this3 = this;
+
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/post/like/".concat(postId)).then(function (response) {
-        console.log(response);
+        if (response.data == 'like') {
+          _this3.didLike = true;
+        } else {
+          _this3.didLike = false;
+        }
       });
     }
   },
@@ -7509,7 +7537,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "a[data-v-71169cda] {\n  text-decoration: none;\n}\n.main-post .card .date[data-v-71169cda] {\n  margin-top: -80px;\n  margin-left: 50px;\n  border-radius: 7px;\n  background-color: #FF5C97;\n  display: flex;\n  flex-direction: column;\n  align-content: center;\n  align-items: center;\n  display: inline-block;\n  width: 100px;\n  height: 100px;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(1) {\n  font-size: 30px;\n  color: #fff;\n  font-weight: 600;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(2) {\n  font-size: 18px;\n  color: #fff;\n  font-weight: 400;\n}\n.main-post .card h5[data-v-71169cda] {\n  transition: 0.3s;\n  display: inline-block;\n  font-size: 1.5rem;\n  font-weight: 600;\n  color: #2B4B80;\n}\n.main-post .card p[data-v-71169cda] {\n  font-size: 1.05rem;\n  font-weight: 400;\n  color: #707B92;\n}\n.main-post .card .links a[data-v-71169cda] {\n  transition: 0.1s;\n  color: #707B92;\n}\n.main-post .card .links a .pink[data-v-71169cda] {\n  display: none;\n}\n.main-post .card .links a[data-v-71169cda]:hover {\n  color: #EC4683;\n}\n.main-post .card .links a:hover .grey[data-v-71169cda] {\n  display: none;\n}\n.main-post .card .links a:hover .pink[data-v-71169cda] {\n  display: inline-block;\n}\n.main-post .card .links span[data-v-71169cda] {\n  display: inline-block;\n  height: 12px;\n  width: 1.5px;\n  border-right: 1.5px solid #000;\n}\n.social-single .col-md-6:nth-child(1) img[data-v-71169cda] {\n  cursor: pointer;\n}\n.social-single .col-md-6:nth-child(2) a[data-v-71169cda] {\n  background-color: #707B8E;\n  border-radius: 2px;\n  transition: 0.2s;\n}\n.social-single .col-md-6:nth-child(2) a[data-v-71169cda]:hover {\n  background-color: #EC4683;\n}\n@media screen and (max-width: 500px) {\n.main-post .card .date[data-v-71169cda] {\n    margin-top: -55px;\n    margin-left: 10px;\n    border-radius: 5px;\n    width: 60px;\n    height: 70px;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(1) {\n    font-size: 20px;\n    color: #fff;\n    font-weight: 600;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(2) {\n    font-size: 14px;\n    color: #fff;\n    font-weight: 400;\n}\n.main-post .card h5[data-v-71169cda] {\n    font-size: 1.3rem;\n    font-weight: 500;\n}\n.main-post .card .links a[data-v-71169cda] {\n    transition: 0.1s;\n    font-size: 0.8rem;\n}\n.main-post .card .links a img[data-v-71169cda] {\n    transform: scale(0.8);\n}\n.main-post .card .links span[data-v-71169cda] {\n    display: inline-block;\n    height: 12px;\n    width: 1.5px;\n    border-right: 1.5px solid #000;\n}\n}", ""]);
+exports.push([module.i, "a[data-v-71169cda] {\n  text-decoration: none;\n}\n.main-post .card .date[data-v-71169cda] {\n  margin-top: -80px;\n  margin-left: 50px;\n  border-radius: 7px;\n  background-color: #FF5C97;\n  display: flex;\n  flex-direction: column;\n  align-content: center;\n  align-items: center;\n  display: inline-block;\n  width: 100px;\n  height: 100px;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(1) {\n  font-size: 30px;\n  color: #fff;\n  font-weight: 600;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(2) {\n  font-size: 18px;\n  color: #fff;\n  font-weight: 400;\n}\n.main-post .card h5[data-v-71169cda] {\n  transition: 0.3s;\n  display: inline-block;\n  font-size: 1.5rem;\n  font-weight: 600;\n  color: #2B4B80;\n}\n.main-post .card p[data-v-71169cda] {\n  font-size: 1.05rem;\n  font-weight: 400;\n  color: #707B92;\n}\n.main-post .card .links a[data-v-71169cda] {\n  transition: 0.1s;\n  color: #707B92;\n}\n.main-post .card .links a .pink[data-v-71169cda] {\n  display: none;\n}\n.main-post .card .links a[data-v-71169cda]:hover {\n  color: #EC4683;\n}\n.main-post .card .links a:hover .grey[data-v-71169cda] {\n  display: none;\n}\n.main-post .card .links a:hover .pink[data-v-71169cda] {\n  display: inline-block;\n}\n.main-post .card .links span[data-v-71169cda] {\n  display: inline-block;\n  height: 12px;\n  width: 1.5px;\n  border-right: 1.5px solid #000;\n}\n.social-single .col-md-6:nth-child(1) img[data-v-71169cda] {\n  cursor: pointer;\n}\n.social-single .col-md-6:nth-child(1) span[data-v-71169cda] {\n  color: #707B8E;\n}\n.social-single .col-md-6:nth-child(2) a[data-v-71169cda] {\n  background-color: #707B8E;\n  border-radius: 2px;\n  transition: 0.2s;\n}\n.social-single .col-md-6:nth-child(2) a[data-v-71169cda]:hover {\n  background-color: #EC4683;\n}\n@media screen and (max-width: 500px) {\n.main-post .card .date[data-v-71169cda] {\n    margin-top: -55px;\n    margin-left: 10px;\n    border-radius: 5px;\n    width: 60px;\n    height: 70px;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(1) {\n    font-size: 20px;\n    color: #fff;\n    font-weight: 600;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(2) {\n    font-size: 14px;\n    color: #fff;\n    font-weight: 400;\n}\n.main-post .card h5[data-v-71169cda] {\n    font-size: 1.3rem;\n    font-weight: 500;\n}\n.main-post .card .links a[data-v-71169cda] {\n    transition: 0.1s;\n    font-size: 0.8rem;\n}\n.main-post .card .links a img[data-v-71169cda] {\n    transform: scale(0.8);\n}\n.main-post .card .links span[data-v-71169cda] {\n    display: inline-block;\n    height: 12px;\n    width: 1.5px;\n    border-right: 1.5px solid #000;\n}\n}", ""]);
 
 // exports
 
@@ -58032,18 +58060,33 @@ var render = function() {
               [
                 _c("div", { staticClass: "col-md-6" }, [
                   _vm.auth
-                    ? _c("img", {
-                        attrs: {
-                          src: "/ico/heart.svg",
-                          alt: "like",
-                          width: "20px"
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.like(_vm.postid)
-                          }
-                        }
-                      })
+                    ? _c("div", { staticClass: "d-inline" }, [
+                        _vm.didLike
+                          ? _c("img", {
+                              attrs: {
+                                src: "/ico/heart-pink.svg",
+                                alt: "like",
+                                width: "20px"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.like(_vm.postid)
+                                }
+                              }
+                            })
+                          : _c("img", {
+                              attrs: {
+                                src: "/ico/heart.svg",
+                                alt: "like",
+                                width: "20px"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.like(_vm.postid)
+                                }
+                              }
+                            })
+                      ])
                     : _c(
                         "a",
                         {
@@ -58065,7 +58108,11 @@ var render = function() {
                       ),
                   _vm._v(" "),
                   _c("span", { staticClass: "ml-3" }, [
-                    _vm._v("soso likes this post")
+                    _vm._v(
+                      "\n                           " +
+                        _vm._s(_vm.sentence) +
+                        "\n                        "
+                    )
                   ])
                 ]),
                 _vm._v(" "),
@@ -78913,8 +78960,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\projects\project4\dev\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\projects\project4\dev\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\coding\projects\projects4\fresh-laravel-copy\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\coding\projects\projects4\fresh-laravel-copy\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

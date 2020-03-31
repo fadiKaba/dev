@@ -25,6 +25,7 @@ Route::post('/getposts', 'PostsController@getPosts');
 Route::post('/getsinglepost/{postId}', 'PostsController@getSinglePost');
 Route::post('/searchpost/{val}', 'PostsController@searchPost');
 Route::post('/searchcat/{val}', 'PostsController@searchCat');
+Route::post('/getlikedusers/{val}', 'PostsController@getLikedUsers');
 
 Route::group(['middleware' => ['auth']], function(){
     

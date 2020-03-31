@@ -23,13 +23,18 @@
                </div>
                <div class="row social-single border-top py-2 my-3 px-0">
                    <div class="col-md-6">
-                           <img v-if="auth" @click="like(postid)" src="/ico/heart.svg" alt="like" width="20px">
+                       <div v-if="auth" class="d-inline">
+                           <img v-if="didLike" @click="like(postid)" src="/ico/heart-pink.svg" alt="like" width="20px">
+                           <img v-else @click="like(postid)" src="/ico/heart.svg" alt="like" width="20px">                          
+                       </div>                                                 
                            <!-- Button trigger modal -->
                             <a v-else type="button" data-toggle="modal" data-target="#not-auth-modal">
                              <img src="/ico/heart.svg" alt="like" width="20px">
                             </a>
                             <!-- end Button trigger modal -->                          
-                           <span class="ml-3">soso likes this post</span> 
+                           <span class="ml-3">
+                               {{sentence}}
+                            </span> 
                     </div>
                    <div class="col-md-6 text-right">
                        <a href="">
@@ -60,21 +65,27 @@ export default {
     props:['postid'],
     data: function(){
         return {
-        auth:false,
-        moment: require('moment'),
-        title:'',
-        body: '',
-        src: '',
-        category1:'',
-        category2: '',
-        likes:'',
-        createdAt:'',
-        categories:['Food', 'Health', 'Travel', 'Lifestyle', 'Technology', 'Inspiration', 'Products'],
+            user:'',
+            auth:false,
+            moment: require('moment'),
+            title:'',
+            body: '',
+            src: '',
+            category1:'',
+            category2: '',
+            likes:'',
+            likedUsers:'',
+            sentence:'',
+            didLike:false,
+            createdAt:'',
+            categories:['Food', 'Health', 'Travel', 'Lifestyle', 'Technology', 'Inspiration', 'Products'],
         }
     },
-    mounted: function(){
+    created: function(){
+        
+    },
+    mounted: function(){       
         this.getPost(this.postid);
-      this.getUser();
     },
     methods:{
         getPost: function(id){
@@ -84,24 +95,42 @@ export default {
                 this.title = pos.title;
                 this.body = pos.body;
                 this.src = pos.src;
-                this.likes = pos.likes;
+                this.likes = pos.likes.split(',');
                 this.createdAt = pos.created_at;
                 this.category1 = pos.category1;
-                this.category2 = pos.category2;
+                this.category2 = pos.category2; 
+                            
+                axios.post(`/getlikedusers/${this.likes}`)
+                .then((response) => {
+                    this.likedUsers =response.data;
+                    this.sentence = this.likedUsers.length == 1 ? `${this.likedUsers[0].name} like this`  :
+                   `${this.likedUsers[this.likedUsers.length -1].name} and ${this.likedUsers.length -1} people like this`  ;
+                   this.getUser();
+                })
             })
         },
         getUser: function(){
-        axios.post('/getuser')
-        .then((response)=>{
-           if(response.data != ''){
-               this.auth = true;
-           }
-        }).catch((err) => '');
+            axios.post('/getuser')
+            .then((response)=>{
+            if(response.data != ''){
+                this.user = response.data;
+                this.auth = true;
+                if(this.likes.includes(this.user.id.toString())){
+                    this.didLike = true
+                }else{
+                    this.didLike = false
+                }
+            }
+            }).catch((err) => '');
       },
         like: function(postId){
             axios.post(`/post/like/${postId}`)
             .then((response)=>{
-               console.log(response)
+                if(response.data == 'like'){
+                    this.didLike = true;
+                }else{
+                    this.didLike = false;
+                }
             })
         }
     },
@@ -188,6 +217,9 @@ a{
     .col-md-6:nth-child(1){
        img{
            cursor: pointer;
+       }
+       span{
+         color: #707B8E;
        }
     }
     .col-md-6:nth-child(2){

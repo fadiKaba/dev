@@ -7,6 +7,7 @@ use Auth;
 use Image;
 use File;
 use App\Post;
+use App\User;
 
 class PostsController extends Controller
 {
@@ -178,17 +179,34 @@ class PostsController extends Controller
     public function like($postId){
         
         $post = Post::findOrFail($postId);
-
-           $likes = explode($post->likes, ',');
-           if(!in_array(Auth::id(), $likes)){
-               array_push($likes, Auth::id());
-               $likesR = implode($likes, ',');
+ 
+           if($post->likes == null || $post->likes == ''){
+               $likes = [];
+           }else{
+              $likes = explode(',', $post->likes); 
+           }          
+ 
+           if(!in_array(strval(Auth::id()), $likes)){
+               array_push($likes,strval(Auth::id()) );
+               $likesR = implode(',', $likes);
                $post->update([
-                   'likes' => $likesR.',',
+                'likes' => $likesR
                ]);
-           } 
-           return $likes;
+               return 'like';
+           }else{
+                $index = array_search(Auth::id(), $likes);
+                unset($likes[$index]);               
+                $likesR = implode(',', $likes);
+                $post->update([
+                    'likes' => $likesR
+                ]);
+                return 'unlike';
+           }                  
+    }
 
-        
+    public function getLikedUsers($val){
+      $arr = explode(',', $val);
+      $users = User::whereIn('id', $arr)->get();
+      return $users;
     }
 }
