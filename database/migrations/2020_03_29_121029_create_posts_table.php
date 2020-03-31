@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
             $table->string('src')->nullable();
             $table->integer('category1');
             $table->integer('category2')->nullable();
+            $table->string('likes')->default(',');
             $table->timestamps();
         });
     }

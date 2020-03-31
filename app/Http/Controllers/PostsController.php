@@ -174,4 +174,21 @@ class PostsController extends Controller
         $result = Post::where('category1', $val)->get();
         return $result;
     }
+
+    public function like($postId){
+        
+        $post = Post::findOrFail($postId);
+
+           $likes = explode($post->likes, ',');
+           if(!in_array(Auth::id(), $likes)){
+               array_push($likes, Auth::id());
+               $likesR = implode($likes, ',');
+               $post->update([
+                   'likes' => $likesR.',',
+               ]);
+           } 
+           return $likes;
+
+        
+    }
 }

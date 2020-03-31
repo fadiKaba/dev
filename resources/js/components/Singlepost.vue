@@ -19,34 +19,62 @@
                             03 Comments
                         </a>       
                    </div>
-                   <p class="card-text">{{body}}</p>                   
+                   <p class="card-text">{{body}}</p>               
                </div>
-                          
+               <div class="row social-single border-top py-2 my-3 px-0">
+                   <div class="col-md-6">
+                           <img v-if="auth" @click="like(postid)" src="/ico/heart.svg" alt="like" width="20px">
+                           <!-- Button trigger modal -->
+                            <a v-else type="button" data-toggle="modal" data-target="#not-auth-modal">
+                             <img src="/ico/heart.svg" alt="like" width="20px">
+                            </a>
+                            <!-- end Button trigger modal -->                          
+                           <span class="ml-3">soso likes this post</span> 
+                    </div>
+                   <div class="col-md-6 text-right">
+                       <a href="">
+                           <img src="/ico/facebook.svg" alt="like" width="25px">
+                        </a>
+                        <a href="">
+                           <img src="/ico/instagram.svg" alt="like" width="25px">
+                        </a>
+                        <a href="">
+                           <img src="/ico/twitter.svg" alt="like" width="25px">
+                        </a>
+                   </div>
+               </div>
+                  <Notauthmodal></Notauthmodal>       
             </div>
         </div>
+        
     </div>    
 </template>
 <script>
 
 import axios from 'axios';
+import Notauthmodal from './Notauthmodal';
 
 export default {
     name: 'Singlepost',
+    components:{Notauthmodal},
     props:['postid'],
     data: function(){
         return {
+        auth:false,
         moment: require('moment'),
         title:'',
         body: '',
         src: '',
         category1:'',
         category2: '',
+        likes:'',
         createdAt:'',
         categories:['Food', 'Health', 'Travel', 'Lifestyle', 'Technology', 'Inspiration', 'Products'],
         }
     },
     mounted: function(){
         this.getPost(this.postid);
+      this.getUser();
     },
     methods:{
         getPost: function(id){
@@ -56,9 +84,24 @@ export default {
                 this.title = pos.title;
                 this.body = pos.body;
                 this.src = pos.src;
+                this.likes = pos.likes;
                 this.createdAt = pos.created_at;
                 this.category1 = pos.category1;
                 this.category2 = pos.category2;
+            })
+        },
+        getUser: function(){
+        axios.post('/getuser')
+        .then((response)=>{
+           if(response.data != ''){
+               this.auth = true;
+           }
+        }).catch((err) => '');
+      },
+        like: function(postId){
+            axios.post(`/post/like/${postId}`)
+            .then((response)=>{
+               console.log(response)
             })
         }
     },
@@ -70,6 +113,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
+a{
+    text-decoration: none;
+}
+
+
 .main-post{
     .card{     
         .date{
@@ -134,6 +183,33 @@ export default {
         }
      }
 }  
+
+.social-single{
+    .col-md-6:nth-child(1){
+       img{
+           cursor: pointer;
+       }
+    }
+    .col-md-6:nth-child(2){
+        a{
+            background-color: #707B8E;
+            border-radius: 2px;
+            transition: 0.2s;
+            &:hover{
+            background-color: #EC4683;
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
 
 
 

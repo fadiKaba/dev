@@ -55,10 +55,12 @@ export default {
            }
         },
         getPosts: function(){
-        axios.post('/getposts')
-        .then((response)=>{
-             this.$emit('catresults', response.data);
-        })
+            this.loading = true;
+            axios.post('/getposts')
+            .then((response)=>{
+                this.$emit('catresults', response.data);
+                this.loading = false;
+            })
       },
     }
 

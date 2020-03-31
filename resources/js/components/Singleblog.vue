@@ -14,7 +14,7 @@
                 </div>
                 <div class="col-md-4">
                     <Searchpost :single="true"></Searchpost>
-                </div>
+                </div>                  
             </div>
         </div>
     </div>
@@ -23,6 +23,7 @@
 
 import Singlepost from "./Singlepost";
 import Searchpost from "./Searchpost";
+import Categories from "./Categories";
 
 export default {
     name: 'Blog',
@@ -30,14 +31,14 @@ export default {
     props:['postid'],
     data: function(){
         return{
-          
+
         }
     },
     mounted: function(){
 
     },
     methods:{
-      
+
     }
 }
 </script>

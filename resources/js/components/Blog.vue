@@ -7,7 +7,7 @@
             <div class="row pt-2 pt-md-5 mt-md-5">
                 <div class="col-md-8">
                     <!-- posts-->
-                    <Posts :cress="catResults" :ress="results"></Posts>                                  
+                    <Posts :cress="catResults" :ress="results" :single="results.length == 1? true: false"></Posts>                                  
                     <!-- end posts -->
                 </div>
                 <div class="col-md-4">

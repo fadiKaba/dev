@@ -45,6 +45,7 @@
                <div :id="'post-content'+id" :class="editMode ? 'd-none': 'd-block'">
                    <router-link :to="'/singleblog/'+id"><h5 class="card-title mt-2 mt-md-3">{{titleVar}}</h5></router-link>
                    <p class="card-text" v-html="limitString(bodyVar, 200, id)"></p>
+                   <router-link v-if="bodyVar.length > 200" :to="'/singleblog/'+id">Read more</router-link>
                </div>
 
                 <div class="mt-3 mt-md-4 links">
@@ -132,9 +133,8 @@ export default {
              
         },
         limitString(str, limit, postId){
-           let dot = ` ...<a href="/posts/postDetail/${postId}"> read more</a>`;
            if(str.length > limit){
-              let string = str.substring(0, limit) + dot;
+              let string = str.substring(0, limit)+ ' ...';
               return string
                
            }

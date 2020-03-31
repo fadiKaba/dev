@@ -28,6 +28,8 @@ Route::post('/searchcat/{val}', 'PostsController@searchCat');
 
 Route::group(['middleware' => ['auth']], function(){
     
+    Route::post('/post/like/{postId}', 'PostsController@like');
+
     Route::group(['middleware' => ['admin']], function(){ 
 
         Route::resource('/post', 'PostsController');
