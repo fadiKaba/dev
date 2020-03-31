@@ -158,7 +158,14 @@ class PostsController extends Controller
     }
 
     public function getSinglePost($postId){
+        
         $post = Post::findOrFail($postId);
         return $post;
+    }
+
+    public function searchPost($val){
+
+        $results = Post::where('title', 'LIKE', "%$val%")->get();
+        return $results;
     }
 }

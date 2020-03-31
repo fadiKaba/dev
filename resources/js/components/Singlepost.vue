@@ -1,5 +1,5 @@
 <template>
-    <div class="main-post">
+    <div class="main-post mb-3 mb-md-5">
         <div class="card rounded-0 border-0" width="100%">
             
             <img :src="'/posts-images/'+src" class="card-img-top rounded-0" alt="img">
@@ -47,7 +47,6 @@ export default {
     },
     mounted: function(){
         this.getPost(this.postid);
-        console.log(this.category2 + ' <-----')
     },
     methods:{
         getPost: function(id){
@@ -64,7 +63,7 @@ export default {
         }
     }
 
-}
+}//this.$forceUpdate();
 </script>
 <style lang="scss" scoped>
 .main-post{

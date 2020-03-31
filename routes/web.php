@@ -23,6 +23,7 @@ Auth::routes();
 
 Route::post('/getposts', 'PostsController@getPosts');
 Route::post('/getsinglepost/{postId}', 'PostsController@getSinglePost');
+Route::post('/searchpost/{val}', 'PostsController@searchPost');
 
 Route::group(['middleware' => ['auth']], function(){
     

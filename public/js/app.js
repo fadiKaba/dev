@@ -2410,6 +2410,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2421,8 +2423,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Searchpost'
+  name: 'Searchpost',
+  data: function data() {
+    return {
+      searching: false,
+      value: '',
+      results: ''
+    };
+  },
+  methods: {
+    searchPost: function searchPost(val) {
+      var _this = this;
+
+      if (this.value.length > 0) {
+        this.searching = true;
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/searchpost/".concat(val)).then(function (response) {
+          _this.searching = false;
+          _this.results = response.data;
+        });
+      } else {
+        this.results = '';
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -2534,7 +2580,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getPost(this.postid);
-    console.log(this.category2 + ' <-----');
   },
   methods: {
     getPost: function getPost(id) {
@@ -2551,7 +2596,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   }
-});
+}); //this.$forceUpdate();
 
 /***/ }),
 
@@ -7155,7 +7200,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".main-search[data-v-356f32f3] {\n  background-color: #FBF9FF;\n}\n.main-search .input-group input[data-v-356f32f3] {\n  height: 50px;\n  border-radius: 0;\n}\n.main-search .input-group input[data-v-356f32f3]:focus {\n  border: transparent 1px solid;\n}\n.main-search .input-group .input-group-append span[data-v-356f32f3] {\n  background-color: #FF5C97;\n  border-radius: 0;\n}\n.main-search button[data-v-356f32f3] {\n  width: 100%;\n  height: 60px;\n  border-radius: 0;\n  border: 1px #FF5C97 solid;\n  color: #FF5C97;\n  letter-spacing: 5px;\n  text-transform: uppercase;\n}\n.main-search button[data-v-356f32f3]:hover {\n  background-color: #FF5C97;\n  color: #fff;\n}", ""]);
+exports.push([module.i, ".main-search[data-v-356f32f3] {\n  background-color: #FBF9FF;\n}\n.main-search .input-group input[data-v-356f32f3] {\n  height: 50px;\n  border-radius: 0;\n}\n.main-search .input-group input[data-v-356f32f3]:focus {\n  border: transparent 1px solid;\n}\n.main-search .input-group .input-group-append span[data-v-356f32f3] {\n  background-color: #FF5C97;\n  border-radius: 0;\n}\n.main-search button[data-v-356f32f3] {\n  width: 100%;\n  height: 60px;\n  border-radius: 0;\n  border: 1px #FF5C97 solid;\n  color: #FF5C97;\n  letter-spacing: 5px;\n  text-transform: uppercase;\n}\n.main-search button[data-v-356f32f3]:hover {\n  background-color: #FF5C97;\n  color: #fff;\n}\n.main-search .search-results[data-v-356f32f3] {\n  position: relative;\n}\n.main-search .search-results div[data-v-356f32f3] {\n  background-color: #fff;\n  position: absolute;\n  overflow-y: scroll;\n  scrollbar-width: thin;\n  max-height: 150px;\n}\n.main-search .search-results div p a[data-v-356f32f3] {\n  text-decoration: none;\n}\n.main-search .search-results div p a[data-v-356f32f3]:hover {\n  color: #FF5C97;\n  transition: 0.2s;\n}", ""]);
 
 // exports
 
@@ -56911,7 +56956,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "main-post" }, [
+  return _c("div", { staticClass: "main-post mb-3 mb-md-5" }, [
     _c(
       "div",
       {
@@ -57222,22 +57267,36 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "main-search py-5 px-md-4" }, [
-      _c("div", { staticClass: "input-group mb-3" }, [
+  return _c("div", { staticClass: "main-search py-5 px-md-4" }, [
+    _c("form", { attrs: { action: "" } }, [
+      _c("div", { staticClass: "input-group" }, [
         _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.value,
+              expression: "value"
+            }
+          ],
           staticClass: "form-control",
           attrs: {
             type: "text",
             placeholder: "Search keyword",
             "aria-label": "Recipient's username",
             "aria-describedby": "basic-addon2"
+          },
+          domProps: { value: _vm.value },
+          on: {
+            keyup: function($event) {
+              return _vm.searchPost(_vm.value)
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.value = $event.target.value
+            }
           }
         }),
         _vm._v(" "),
@@ -57247,17 +57306,54 @@ var staticRenderFns = [
             { staticClass: "input-group-text", attrs: { id: "basic-addon2" } },
             [
               _c("img", {
-                attrs: { src: "/ico/search.svg", alt: "search", width: "25px" }
-              })
+                class: _vm.searching ? "d-none" : "d-block",
+                attrs: { src: "/ico/search.svg", alt: "search", width: "32px" }
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  class: _vm.searching
+                    ? "d-block spinner-border text-light"
+                    : "d-none",
+                  attrs: { role: "status" }
+                },
+                [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+              )
             ]
           )
         ])
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn" }, [_vm._v("Search")])
-    ])
-  }
-]
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.results.length > 0
+      ? _c("div", { staticClass: "search-results" }, [
+          _c(
+            "div",
+            { staticClass: "p-3 mt-0" },
+            _vm._l(_vm.results, function(result) {
+              return _c(
+                "p",
+                { key: "r" + result.id, staticClass: "my-1" },
+                [
+                  _c(
+                    "router-link",
+                    { attrs: { to: "/singleblog/" + result.id } },
+                    [_vm._v(_vm._s(result.title))]
+                  )
+                ],
+                1
+              )
+            }),
+            0
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("button", { staticClass: "btn mt-3" }, [_vm._v("Search")])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -57328,7 +57424,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "main-post" }, [
+  return _c("div", { staticClass: "main-post mb-3 mb-md-5" }, [
     _c(
       "div",
       { staticClass: "card rounded-0 border-0", attrs: { width: "100%" } },
@@ -77965,8 +78061,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\projects\project4\dev\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\projects\project4\dev\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\coding\projects\projects4\fresh-laravel-copy\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\coding\projects\projects4\fresh-laravel-copy\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
