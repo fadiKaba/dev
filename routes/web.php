@@ -30,6 +30,8 @@ Route::post('/getlikedusers/{val}', 'PostsController@getLikedUsers');
 Route::group(['middleware' => ['auth']], function(){
     
     Route::post('/post/like/{postId}', 'PostsController@like');
+    Route::post('/comment/get', 'CommentsController@index');
+    Route::post('/comment/create/{postId}', 'CommentsController@store');
 
     Route::group(['middleware' => ['admin']], function(){ 
 

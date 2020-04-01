@@ -8,7 +8,7 @@
                 <div class="col-md-8">                
                     <!-- posts-->
                     <div>
-                        <Singlepost :postid="postid"></Singlepost>
+                        <Singlepost :auth="auth" :postid="postid"></Singlepost>
                     </div>                   
                     <!-- end posts -->
                 </div>
@@ -31,14 +31,22 @@ export default {
     props:['postid'],
     data: function(){
         return{
-
+          auth:''
         }
     },
     mounted: function(){
-
+       this.getUser()
     },
     methods:{
-
+       getUser: function(){
+            axios.post('/getuser')
+            .then((response)=>{
+            if(response.data != ''){
+                this.user = response.data;
+                this.auth = true;
+            }
+            }).catch((err) => '');
+      },
     }
 }
 </script>

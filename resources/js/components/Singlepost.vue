@@ -23,17 +23,19 @@
                </div>
                <div class="row social-single border-top py-2 my-3 px-0">
                    <div class="col-md-6">
-                       <div v-if="auth" class="d-inline">
+                       <div :class="auth ? 'd-inline': 'd-none'">
                            <img v-if="didLike" @click="like(postid)" src="/ico/heart-pink.svg" alt="like" width="20px">
-                           <img v-else @click="like(postid)" src="/ico/heart.svg" alt="like" width="20px">                          
-                       </div>                                                 
+                           <img v-else @click="like(postid)" src="/ico/heart.svg" alt="like" width="20px">
+                           <span class="badge badge-secondary text-light" v-if="likesCount > 0">{{likesCount}}</span>                          
+                       </div>                                              
                            <!-- Button trigger modal -->
-                            <a v-else type="button" data-toggle="modal" data-target="#not-auth-modal">
+                            <a :class="!auth ? 'd-inline': 'd-none'" type="button" data-toggle="modal" data-target="#not-auth-modal">
                              <img src="/ico/heart.svg" alt="like" width="20px">
+                             <span class="badge badge-secondary text-light" v-if="likesCount > 0">{{likesCount}}</span>
                             </a>
                             <!-- end Button trigger modal -->                          
                            <span class="ml-3">
-                               {{sentence}}
+                             {{sentence}}
                             </span> 
                     </div>
                    <div class="col-md-6 text-right">
@@ -48,6 +50,30 @@
                         </a>
                    </div>
                </div>
+               <div class="mt-3 mt-md-5 comments-container">
+                   <div class="pb-2 pb-md-5">
+                       <h4>Comments</h4>
+                        <div>
+                            <Comment></Comment>
+                        </div>
+                   </div>                 
+                   <div class="mt-5 add-comment-container">
+                       <form action="">
+                           <h4>Leave a comment</h4>
+                           <div class="form-group mt-2 mt-md-5">
+                               <textarea 
+                               class="form-control border-0" 
+                               name="body" 
+                               cols="30" 
+                               rows="10"
+                               v-model="newComment" 
+                               placeholder="Write Comment">
+                               </textarea>
+                           </div>                          
+                       </form> 
+                       <button @click="addComment(postid)" class="px-3">Add Comment</button>                      
+                   </div>
+               </div>
                   <Notauthmodal></Notauthmodal>       
             </div>
         </div>
@@ -58,15 +84,15 @@
 
 import axios from 'axios';
 import Notauthmodal from './Notauthmodal';
+import Comment from './Comment';
 
 export default {
     name: 'Singlepost',
-    components:{Notauthmodal},
-    props:['postid'],
+    components:{Notauthmodal, Comment},
+    props:['postid', 'auth'],
     data: function(){
         return {
             user:'',
-            auth:false,
             moment: require('moment'),
             title:'',
             body: '',
@@ -75,14 +101,13 @@ export default {
             category2: '',
             likes:'',
             likedUsers:'',
+            likesCount:'',
             sentence:'',
             didLike:false,
             createdAt:'',
+            newComment:'',
             categories:['Food', 'Health', 'Travel', 'Lifestyle', 'Technology', 'Inspiration', 'Products'],
         }
-    },
-    created: function(){
-        
     },
     mounted: function(){       
         this.getPost(this.postid);
@@ -91,47 +116,47 @@ export default {
         getPost: function(id){
             axios.post(`/getsinglepost/${id}`)
             .then((response) => {
-                let pos = response.data
+                let pos = response.data[0];
                 this.title = pos.title;
                 this.body = pos.body;
                 this.src = pos.src;
-                this.likes = pos.likes.split(',');
+                this.likes = pos.likes == null || pos.like == '' ? '' : pos.likes.split(',');
                 this.createdAt = pos.created_at;
                 this.category1 = pos.category1;
                 this.category2 = pos.category2; 
-                            
-                axios.post(`/getlikedusers/${this.likes}`)
-                .then((response) => {
-                    this.likedUsers =response.data;
-                    this.sentence = this.likedUsers.length == 1 ? `${this.likedUsers[0].name} like this`  :
-                   `${this.likedUsers[this.likedUsers.length -1].name} and ${this.likedUsers.length -1} people like this`  ;
-                   this.getUser();
-                })
+                
+                if(this.likes != null && this.likes != ''){
+                    axios.post(`/getlikedusers/${this.likes}`)
+                    .then((response) => {
+                        this.likedUsers =response.data;
+                        this.likesCount = this.likedUsers.length;
+                        this.sentence = this.likedUsers.length == 1 ? `${this.likedUsers[0].name} like this`  :
+                    `${this.likedUsers[this.likedUsers.length -1].name} and ${this.likedUsers.length -1} people like this`  ;                  
+                    })
+                }               
             })
         },
-        getUser: function(){
-            axios.post('/getuser')
-            .then((response)=>{
-            if(response.data != ''){
-                this.user = response.data;
-                this.auth = true;
-                if(this.likes.includes(this.user.id.toString())){
-                    this.didLike = true
-                }else{
-                    this.didLike = false
-                }
-            }
-            }).catch((err) => '');
-      },
         like: function(postId){
             axios.post(`/post/like/${postId}`)
             .then((response)=>{
                 if(response.data == 'like'){
                     this.didLike = true;
+                    this.likesCount += 1;
                 }else{
                     this.didLike = false;
+                    this.likesCount -= 1;
                 }
             })
+        },
+        addComment: function(postId){
+          if(this.newComment != ''){
+              axios.post(`/comment/create/${postId}`,{
+                  'body': this.newComment 
+              })
+              .then((response) => {
+                  console.log(response)
+              })
+          }
         }
     },
     watch:{
@@ -234,6 +259,28 @@ a{
     }
 }
 
+.comments-container{
+    h4{
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #2b4b80;  
+    }   
+    .add-comment-container{
+        button{
+           height: 60px;
+           border-radius: 0;
+           border: 1px #FF5C97 solid;
+           color:#FF5C97;
+           letter-spacing: 5px;
+           text-transform: uppercase;
+           transition: 0.2s;
+           &:hover{
+               background-color: #FF5C97;
+               color:#fff;
+           }
+         }
+    }
+}
 
 
 
@@ -294,7 +341,6 @@ a{
         }
      }
 }  
-
 
 }
 </style>

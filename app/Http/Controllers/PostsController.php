@@ -160,7 +160,7 @@ class PostsController extends Controller
 
     public function getSinglePost($postId){
         
-        $post = Post::findOrFail($postId);
+        $post = Post::where('id', $postId)->with('comment')->get();
         return $post;
     }
 
