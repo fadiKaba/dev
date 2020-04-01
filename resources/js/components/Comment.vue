@@ -2,20 +2,30 @@
     <div class="main-comment">
         <div class="d-flex my-3 my-md-4">
             <div>
-                <img src="/images/default-user.png" alt="user" width="70px">
+                <img class="rounded-circle" src="/images/default-user.png" alt="user" width="70px">
             </div>
             <div class="pt-2 pl-2">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                     Odit dolores quod necessitatibus. Accusantium, itaque consectetur.
-                </p>
-                <span class="name">Fadi Kaba </span> <span class="ml-2 date"> Date</span>
+                <p>{{comt.body}}</p>
+                <span class="name">{{comt.userName}}</span> <span class="ml-2 date"> {{comt.createdAt}}</span>
             </div>
         </div>
     </div>
 </template>
 <script>
 export default {
-    name: 'Comment'
+    name: 'Comment',
+    props:['comt'],
+    data: function(){
+        return{
+           
+        }
+    },   
+    mounted: function(){
+
+    },
+    methods:{
+     
+    }
 }
 </script>
 <style lang="scss" scoped>

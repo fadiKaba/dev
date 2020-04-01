@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 
 Route::post('/getuser', 'AppController@getUser');
+Route::post('/getusername{userId}', 'AppController@getUserName');
 
 Auth::routes();
 

@@ -2072,10 +2072,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Comment'
+  name: 'Comment',
+  props: ['comt'],
+  data: function data() {
+    return {};
+  },
+  mounted: function mounted() {},
+  methods: {}
 });
 
 /***/ }),
@@ -2388,10 +2392,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Post__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Post */ "./resources/js/components/Post.vue");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 //
 //
 //
@@ -2530,32 +2530,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     makePostsArr: function makePostsArr(arr) {
       var _this3 = this;
 
-      var Post = /*#__PURE__*/function () {
-        function Post(element) {
-          _classCallCheck(this, Post);
+      var Post = function Post(element) {
+        _classCallCheck(this, Post);
 
-          this.id = element.id;
-          this.userId = element.user_id;
-          this.src = element.src;
-          this.title = element.title;
-          this.body = element.body;
-          this.category1 = element.category1, this.category2 = element.category2, this.createdAt = element.created_at;
-        }
-
-        _createClass(Post, null, [{
-          key: "obj",
-          value: function obj() {
-            return {
-              userId: this.userId,
-              src: this.src,
-              title: this.title,
-              body: this.body
-            };
-          }
-        }]);
-
-        return Post;
-      }();
+        this.id = element.id;
+        this.userId = element.user_id;
+        this.src = element.src;
+        this.title = element.title;
+        this.body = element.body;
+        this.category1 = element.category1, this.category2 = element.category2, this.createdAt = element.created_at;
+      };
 
       arr.forEach(function (element) {
         var objPostReady = new Post(element);
@@ -2782,6 +2766,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Notauthmodal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Notauthmodal */ "./resources/js/components/Notauthmodal.vue");
 /* harmony import */ var _Comment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Comment */ "./resources/js/components/Comment.vue");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2886,6 +2883,7 @@ __webpack_require__.r(__webpack_exports__);
       likes: '',
       likedUsers: '',
       likesCount: '',
+      comments: [],
       sentence: '',
       didLike: false,
       createdAt: '',
@@ -2910,6 +2908,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.category1 = pos.category1;
         _this.category2 = pos.category2;
 
+        _this.makeCommentsArr(pos.comment);
+
         if (_this.likes != null && _this.likes != '') {
           axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/getlikedusers/".concat(_this.likes)).then(function (response) {
             _this.likedUsers = response.data;
@@ -2932,12 +2932,37 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
+    makeCommentsArr: function makeCommentsArr(arr) {
+      var _this3 = this;
+
+      var Comment = function Comment(element) {
+        _classCallCheck(this, Comment);
+
+        this.id = element.id;
+        this.userId = element.user_id;
+        this.body = element.body;
+        this.createdAt = element.createdAt;
+      };
+
+      arr.forEach(function (item) {
+        var commentR = new Comment(item);
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/getusername".concat(commentR.userId)).then(function (response) {
+          commentR.userName = response.data;
+
+          _this3.comments.unshift(commentR);
+        })["catch"](function (err) {
+          return '';
+        });
+      });
+    },
     addComment: function addComment(postId) {
+      var _this4 = this;
+
       if (this.newComment != '') {
         axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/comment/create/".concat(postId), {
           'body': this.newComment
         }).then(function (response) {
-          console.log(response);
+          _this4.makeCommentsArr([response.data]);
         });
       }
     }
@@ -7627,7 +7652,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "a[data-v-71169cda] {\n  text-decoration: none;\n}\n.main-post .card .date[data-v-71169cda] {\n  margin-top: -80px;\n  margin-left: 50px;\n  border-radius: 7px;\n  background-color: #FF5C97;\n  display: flex;\n  flex-direction: column;\n  align-content: center;\n  align-items: center;\n  display: inline-block;\n  width: 100px;\n  height: 100px;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(1) {\n  font-size: 30px;\n  color: #fff;\n  font-weight: 600;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(2) {\n  font-size: 18px;\n  color: #fff;\n  font-weight: 400;\n}\n.main-post .card h5[data-v-71169cda] {\n  transition: 0.3s;\n  display: inline-block;\n  font-size: 1.5rem;\n  font-weight: 600;\n  color: #2B4B80;\n}\n.main-post .card p[data-v-71169cda] {\n  font-size: 1.05rem;\n  font-weight: 400;\n  color: #707B92;\n}\n.main-post .card .links a[data-v-71169cda] {\n  transition: 0.1s;\n  color: #707B92;\n}\n.main-post .card .links a .pink[data-v-71169cda] {\n  display: none;\n}\n.main-post .card .links a[data-v-71169cda]:hover {\n  color: #EC4683;\n}\n.main-post .card .links a:hover .grey[data-v-71169cda] {\n  display: none;\n}\n.main-post .card .links a:hover .pink[data-v-71169cda] {\n  display: inline-block;\n}\n.main-post .card .links span[data-v-71169cda] {\n  display: inline-block;\n  height: 12px;\n  width: 1.5px;\n  border-right: 1.5px solid #000;\n}\n.social-single .col-md-6:nth-child(1) img[data-v-71169cda] {\n  cursor: pointer;\n}\n.social-single .col-md-6:nth-child(1) span[data-v-71169cda] {\n  color: #707B8E;\n}\n.social-single .col-md-6:nth-child(2) a[data-v-71169cda] {\n  background-color: #707B8E;\n  border-radius: 2px;\n  transition: 0.2s;\n}\n.social-single .col-md-6:nth-child(2) a[data-v-71169cda]:hover {\n  background-color: #EC4683;\n}\n.comments-container h4[data-v-71169cda] {\n  font-size: 1.2rem;\n  font-weight: 500;\n  color: #2b4b80;\n}\n.comments-container .add-comment-container button[data-v-71169cda] {\n  height: 60px;\n  border-radius: 0;\n  border: 1px #FF5C97 solid;\n  color: #FF5C97;\n  letter-spacing: 5px;\n  text-transform: uppercase;\n  transition: 0.2s;\n}\n.comments-container .add-comment-container button[data-v-71169cda]:hover {\n  background-color: #FF5C97;\n  color: #fff;\n}\n@media screen and (max-width: 500px) {\n.main-post .card .date[data-v-71169cda] {\n    margin-top: -55px;\n    margin-left: 10px;\n    border-radius: 5px;\n    width: 60px;\n    height: 70px;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(1) {\n    font-size: 20px;\n    color: #fff;\n    font-weight: 600;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(2) {\n    font-size: 14px;\n    color: #fff;\n    font-weight: 400;\n}\n.main-post .card h5[data-v-71169cda] {\n    font-size: 1.3rem;\n    font-weight: 500;\n}\n.main-post .card .links a[data-v-71169cda] {\n    transition: 0.1s;\n    font-size: 0.8rem;\n}\n.main-post .card .links a img[data-v-71169cda] {\n    transform: scale(0.8);\n}\n.main-post .card .links span[data-v-71169cda] {\n    display: inline-block;\n    height: 12px;\n    width: 1.5px;\n    border-right: 1.5px solid #000;\n}\n}", ""]);
+exports.push([module.i, "a[data-v-71169cda] {\n  text-decoration: none;\n}\n.main-post .card .date[data-v-71169cda] {\n  margin-top: -80px;\n  margin-left: 50px;\n  border-radius: 7px;\n  background-color: #FF5C97;\n  display: flex;\n  flex-direction: column;\n  align-content: center;\n  align-items: center;\n  display: inline-block;\n  width: 100px;\n  height: 100px;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(1) {\n  font-size: 30px;\n  color: #fff;\n  font-weight: 600;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(2) {\n  font-size: 18px;\n  color: #fff;\n  font-weight: 400;\n}\n.main-post .card h5[data-v-71169cda] {\n  transition: 0.3s;\n  display: inline-block;\n  font-size: 1.5rem;\n  font-weight: 600;\n  color: #2B4B80;\n}\n.main-post .card p[data-v-71169cda] {\n  font-size: 1.05rem;\n  font-weight: 400;\n  color: #707B92;\n}\n.main-post .card .links a[data-v-71169cda] {\n  transition: 0.1s;\n  color: #707B92;\n}\n.main-post .card .links a .pink[data-v-71169cda] {\n  display: none;\n}\n.main-post .card .links a[data-v-71169cda]:hover {\n  color: #EC4683;\n}\n.main-post .card .links a:hover .grey[data-v-71169cda] {\n  display: none;\n}\n.main-post .card .links a:hover .pink[data-v-71169cda] {\n  display: inline-block;\n}\n.main-post .card .links span[data-v-71169cda] {\n  display: inline-block;\n  height: 12px;\n  width: 1.5px;\n  border-right: 1.5px solid #000;\n}\n.social-single .col-md-6:nth-child(1) img[data-v-71169cda] {\n  cursor: pointer;\n}\n.social-single .col-md-6:nth-child(1) span[data-v-71169cda] {\n  color: #707B8E;\n}\n.social-single .col-md-6:nth-child(2) a[data-v-71169cda] {\n  background-color: #707B8E;\n  border-radius: 2px;\n  transition: 0.2s;\n}\n.social-single .col-md-6:nth-child(2) a[data-v-71169cda]:hover {\n  background-color: #EC4683;\n}\n.comments-container h4[data-v-71169cda] {\n  font-size: 1.2rem;\n  font-weight: 500;\n  color: #2b4b80;\n}\n.comments-container .add-comment-container button[data-v-71169cda], .comments-container .add-comment-container a[data-v-71169cda] {\n  height: 60px;\n  border-radius: 0;\n  border: 1px #FF5C97 solid;\n  color: #FF5C97;\n  letter-spacing: 5px;\n  text-transform: uppercase;\n  transition: 0.2s;\n}\n.comments-container .add-comment-container button[data-v-71169cda]:hover, .comments-container .add-comment-container a[data-v-71169cda]:hover {\n  background-color: #FF5C97;\n  color: #fff;\n}\n@media screen and (max-width: 500px) {\n.main-post .card .date[data-v-71169cda] {\n    margin-top: -55px;\n    margin-left: 10px;\n    border-radius: 5px;\n    width: 60px;\n    height: 70px;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(1) {\n    font-size: 20px;\n    color: #fff;\n    font-weight: 600;\n}\n.main-post .card .date p[data-v-71169cda]:nth-child(2) {\n    font-size: 14px;\n    color: #fff;\n    font-weight: 400;\n}\n.main-post .card h5[data-v-71169cda] {\n    font-size: 1.3rem;\n    font-weight: 500;\n}\n.main-post .card .links a[data-v-71169cda] {\n    transition: 0.1s;\n    font-size: 0.8rem;\n}\n.main-post .card .links a img[data-v-71169cda] {\n    transform: scale(0.8);\n}\n.main-post .card .links span[data-v-71169cda] {\n    display: inline-block;\n    height: 12px;\n    width: 1.5px;\n    border-right: 1.5px solid #000;\n}\n}", ""]);
 
 // exports
 
@@ -57052,37 +57077,34 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "main-comment" }, [
+    _c("div", { staticClass: "d-flex my-3 my-md-4" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "pt-2 pl-2" }, [
+        _c("p", [_vm._v(_vm._s(_vm.comt.body))]),
+        _vm._v(" "),
+        _c("span", { staticClass: "name" }, [
+          _vm._v(_vm._s(_vm.comt.userName))
+        ]),
+        _vm._v(" "),
+        _c("span", { staticClass: "ml-2 date" }, [
+          _vm._v(" " + _vm._s(_vm.comt.createdAt))
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "main-comment" }, [
-      _c("div", { staticClass: "d-flex my-3 my-md-4" }, [
-        _c("div", [
-          _c("img", {
-            attrs: {
-              src: "/images/default-user.png",
-              alt: "user",
-              width: "70px"
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "pt-2 pl-2" }, [
-          _c("p", [
-            _vm._v(
-              "Lorem ipsum dolor sit amet consectetur adipisicing elit.\n                 Odit dolores quod necessitatibus. Accusantium, itaque consectetur.\n            "
-            )
-          ]),
-          _vm._v(" "),
-          _c("span", { staticClass: "name" }, [_vm._v("Fadi Kaba ")]),
-          _vm._v(" "),
-          _c("span", { staticClass: "ml-2 date" }, [_vm._v(" Date")])
-        ])
-      ])
+    return _c("div", [
+      _c("img", {
+        staticClass: "rounded-circle",
+        attrs: { src: "/images/default-user.png", alt: "user", width: "70px" }
+      })
     ])
   }
 ]
@@ -58321,58 +58343,103 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { staticClass: "mt-3 mt-md-5 comments-container" }, [
-              _c("div", { staticClass: "pb-2 pb-md-5" }, [
-                _c("h4", [_vm._v("Comments")]),
-                _vm._v(" "),
-                _c("div", [_c("Comment")], 1)
-              ]),
+              _c(
+                "div",
+                { staticClass: "pb-2 pb-md-5" },
+                [
+                  _c("h4", [_vm._v("Comments")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.comments, function(comment) {
+                    return _c(
+                      "div",
+                      { key: "c" + comment.id },
+                      [_c("Comment", { attrs: { comt: comment } })],
+                      1
+                    )
+                  })
+                ],
+                2
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "mt-5 add-comment-container" }, [
                 _c("form", { attrs: { action: "" } }, [
                   _c("h4", [_vm._v("Leave a comment")]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group mt-2 mt-md-5" }, [
-                    _c("textarea", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.newComment,
-                          expression: "newComment"
-                        }
-                      ],
-                      staticClass: "form-control border-0",
-                      attrs: {
-                        name: "body",
-                        cols: "30",
-                        rows: "10",
-                        placeholder: "Write Comment"
-                      },
-                      domProps: { value: _vm.newComment },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
+                    _vm.auth
+                      ? _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.newComment,
+                              expression: "newComment"
+                            }
+                          ],
+                          staticClass: "form-control border-0",
+                          attrs: {
+                            name: "body",
+                            cols: "30",
+                            rows: "10",
+                            placeholder: "Write Comment"
+                          },
+                          domProps: { value: _vm.newComment },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.newComment = $event.target.value
+                            }
                           }
-                          _vm.newComment = $event.target.value
-                        }
-                      }
-                    })
+                        })
+                      : _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.newComment,
+                              expression: "newComment"
+                            }
+                          ],
+                          staticClass: "form-control border-0",
+                          attrs: {
+                            name: "body",
+                            cols: "30",
+                            rows: "10",
+                            placeholder: "Write Comment"
+                          },
+                          domProps: { value: _vm.newComment },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.newComment = $event.target.value
+                            }
+                          }
+                        })
                   ])
                 ]),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "px-3",
-                    on: {
-                      click: function($event) {
-                        return _vm.addComment(_vm.postid)
-                      }
-                    }
-                  },
-                  [_vm._v("Add Comment")]
-                )
+                !_vm.auth
+                  ? _c(
+                      "a",
+                      { staticClass: "px-3", attrs: { href: "/login" } },
+                      [_vm._v("Login or Register")]
+                    )
+                  : _c(
+                      "button",
+                      {
+                        staticClass: "px-3",
+                        on: {
+                          click: function($event) {
+                            return _vm.addComment(_vm.postid)
+                          }
+                        }
+                      },
+                      [_vm._v("Add Comment")]
+                    )
               ])
             ]),
             _vm._v(" "),
@@ -79303,8 +79370,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\projects\project4\dev\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\projects\project4\dev\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\coding\projects\projects4\fresh-laravel-copy\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\coding\projects\projects4\fresh-laravel-copy\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

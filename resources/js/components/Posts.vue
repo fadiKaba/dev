@@ -143,10 +143,6 @@ export default {
                    this.category2 = element.category2,
                    this.createdAt = element.created_at
                 }
-
-                static obj (){
-                    return {userId: this.userId, src: this.src, title: this.title, body: this.body}
-                }
           }        
           arr.forEach(element => {
               let objPostReady = new Post(element);

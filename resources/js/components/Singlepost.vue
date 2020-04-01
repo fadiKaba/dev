@@ -53,8 +53,8 @@
                <div class="mt-3 mt-md-5 comments-container">
                    <div class="pb-2 pb-md-5">
                        <h4>Comments</h4>
-                        <div>
-                            <Comment></Comment>
+                        <div v-for="comment in comments" :key="'c'+comment.id">
+                            <Comment :comt="comment"></Comment>
                         </div>
                    </div>                 
                    <div class="mt-5 add-comment-container">
@@ -62,6 +62,16 @@
                            <h4>Leave a comment</h4>
                            <div class="form-group mt-2 mt-md-5">
                                <textarea 
+                               v-if="auth"
+                               class="form-control border-0" 
+                               name="body" 
+                               cols="30" 
+                               rows="10"
+                               v-model="newComment" 
+                               placeholder="Write Comment">
+                               </textarea>
+                               <textarea 
+                               v-else
                                class="form-control border-0" 
                                name="body" 
                                cols="30" 
@@ -71,7 +81,8 @@
                                </textarea>
                            </div>                          
                        </form> 
-                       <button @click="addComment(postid)" class="px-3">Add Comment</button>                      
+                       <a v-if="!auth" href="/login" class="px-3">Login or Register</a> 
+                       <button v-else @click="addComment(postid)" class="px-3">Add Comment</button>                      
                    </div>
                </div>
                   <Notauthmodal></Notauthmodal>       
@@ -102,6 +113,7 @@ export default {
             likes:'',
             likedUsers:'',
             likesCount:'',
+            comments:[],
             sentence:'',
             didLike:false,
             createdAt:'',
@@ -124,7 +136,8 @@ export default {
                 this.createdAt = pos.created_at;
                 this.category1 = pos.category1;
                 this.category2 = pos.category2; 
-                
+                this.makeCommentsArr(pos.comment);
+
                 if(this.likes != null && this.likes != ''){
                     axios.post(`/getlikedusers/${this.likes}`)
                     .then((response) => {
@@ -148,13 +161,32 @@ export default {
                 }
             })
         },
+        makeCommentsArr: function(arr){
+            class Comment{
+
+                constructor(element){
+                   this.id = element.id;
+                   this.userId = element.user_id;
+                   this.body = element.body;
+                   this.createdAt = element.createdAt;
+                }    
+            }
+            arr.forEach(item => {
+                let commentR = new Comment(item); 
+                    axios.post(`/getusername${commentR.userId}`)
+                    .then((response)=>{
+                        commentR.userName = response.data;
+                        this.comments.unshift(commentR);
+                    }).catch((err) => '');               
+            });
+        },
         addComment: function(postId){
           if(this.newComment != ''){
               axios.post(`/comment/create/${postId}`,{
                   'body': this.newComment 
               })
               .then((response) => {
-                  console.log(response)
+                  this.makeCommentsArr([response.data]);
               })
           }
         }
@@ -266,7 +298,7 @@ a{
       color: #2b4b80;  
     }   
     .add-comment-container{
-        button{
+        button,a{
            height: 60px;
            border-radius: 0;
            border: 1px #FF5C97 solid;
