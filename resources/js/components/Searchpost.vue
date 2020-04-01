@@ -50,12 +50,13 @@ export default {
     },
     methods:{
         searchPost: function(val){
-            if(this.value.length > 2){
+            if(this.value.length > 1){
                 this.searching = true;
             axios.post(`/searchpost/${val}`)
             .then((response) => {
                 this.searching = false;
                 this.results = response.data;
+                this.manyResults = response.data;
             })
             }else{
                 this.results = '';

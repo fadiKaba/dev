@@ -16,3 +16,24 @@ body{
     font-weight: 400;
     background-color: #fff;  
 }
+
+.login-container{
+    h2{
+        font-size: 1rem;
+        font-weight: 700;
+        color: #2B4B80;
+        span{
+           
+            display: inline-block;
+            &.line{
+                 width: 45px;
+                 height: 5px;
+                 border-top: 1.5px solid #2B4B80;
+                 margin-right: 10px; 
+            }                  
+            &.title-h2{
+                font-size: 3rem;
+            }
+        }
+    }
+}

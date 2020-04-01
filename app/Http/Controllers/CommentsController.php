@@ -29,4 +29,15 @@ class CommentsController extends Controller
 
        return $comment;
     }
+
+    public function destroy($commentId){
+        $comment = Comment::findOrFail($commentId);
+        if($comment->user_id == Auth::id()){
+            $comment->delete();
+            return $comment;
+        }else{
+            return 'NotAutorized';
+        }
+        
+    }
 }

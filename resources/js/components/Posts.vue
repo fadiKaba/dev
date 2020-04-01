@@ -73,6 +73,7 @@
         <!-- end admin new post -->  
         <!-- Posts -->
         <div v-if=" arrPosts.length > 0">
+            <transition-group name="fade">
             <Post 
             v-for="post in arrPosts" 
             :key="'p'+post.id" 
@@ -87,6 +88,7 @@
             :createdAt="post.created_at"
             v-on:deleteditem="deletedItem"
             ></Post>
+            </transition-group>
         </div>    
         <!-- end posts -->      
     </div>
@@ -196,5 +198,15 @@ export default {
 }
 </script>
 <style scoped>
+
+    .fade-enter-active, .fade-leave-active {
+        transform: translateY(0px);
+    transition: all 0.5s;
+    }
+
+    .fade-enter,.fade-leave-to {
+        transform: translateY(-10px);
+    opacity: 0;
+    }
 
 </style>

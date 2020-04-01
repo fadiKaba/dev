@@ -8,7 +8,7 @@
                 <div class="col-md-8">                
                     <!-- posts-->
                     <div>
-                        <Singlepost :auth="auth" :postid="postid"></Singlepost>
+                        <Singlepost :authuser="user" :auth="auth" :postid="postid"></Singlepost>
                     </div>                   
                     <!-- end posts -->
                 </div>
@@ -31,7 +31,8 @@ export default {
     props:['postid'],
     data: function(){
         return{
-          auth:''
+          auth:'',
+          user:'',
         }
     },
     mounted: function(){

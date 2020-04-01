@@ -26,12 +26,12 @@
                        <div :class="auth ? 'd-inline': 'd-none'">
                            <img v-if="didLike" @click="like(postid)" src="/ico/heart-pink.svg" alt="like" width="20px">
                            <img v-else @click="like(postid)" src="/ico/heart.svg" alt="like" width="20px">
-                           <span class="badge badge-secondary text-light" v-if="likesCount > 0">{{likesCount}}</span>                          
+                           <span class="badge badge-light" v-if="likesCount > 0">{{likesCount}}</span>                          
                        </div>                                              
                            <!-- Button trigger modal -->
                             <a :class="!auth ? 'd-inline': 'd-none'" type="button" data-toggle="modal" data-target="#not-auth-modal">
                              <img src="/ico/heart.svg" alt="like" width="20px">
-                             <span class="badge badge-secondary text-light" v-if="likesCount > 0">{{likesCount}}</span>
+                             <span class="badge badge-light" v-if="likesCount > 0">{{likesCount}}</span>
                             </a>
                             <!-- end Button trigger modal -->                          
                            <span class="ml-3">
@@ -53,9 +53,11 @@
                <div class="mt-3 mt-md-5 comments-container">
                    <div class="pb-2 pb-md-5">
                        <h4>Comments</h4>
+                       <transition-group name="fade">
                         <div v-for="comment in comments" :key="'c'+comment.id">
-                            <Comment :comt="comment"></Comment>
+                            <Comment v-on:delItemId="deletedItem" :authuser="authuser" :comt="comment"></Comment>
                         </div>
+                         </transition-group>
                    </div>                 
                    <div class="mt-5 add-comment-container">
                        <form action="">
@@ -72,12 +74,13 @@
                                </textarea>
                                <textarea 
                                v-else
+                               disabled
                                class="form-control border-0" 
                                name="body" 
                                cols="30" 
                                rows="10"
                                v-model="newComment" 
-                               placeholder="Write Comment">
+                               placeholder="Write a Comment">
                                </textarea>
                            </div>                          
                        </form> 
@@ -100,7 +103,7 @@ import Comment from './Comment';
 export default {
     name: 'Singlepost',
     components:{Notauthmodal, Comment},
-    props:['postid', 'auth'],
+    props:['postid', 'auth', 'authuser'],
     data: function(){
         return {
             user:'',
@@ -123,6 +126,7 @@ export default {
     },
     mounted: function(){       
         this.getPost(this.postid);
+        
     },
     methods:{
         getPost: function(id){
@@ -189,11 +193,24 @@ export default {
                   this.makeCommentsArr([response.data]);
               })
           }
+        },
+        deletedItem(val){
+            console.log(val)
+            for(let i = 0; i < this.comments.length; i++){
+                if(this.comments[i].id == val){
+                    this.comments.splice(i, 1);
+                }
+            }
         }
     },
     watch:{
       postid: function(newVal, oldVal){
           this.getPost(newVal);
+      },
+      authuser: function(newVal, oldVal){
+          if(this.likes.includes(newVal.id.toString())){
+            this.didLike = true;
+        }
       }
     }
 }
@@ -311,6 +328,16 @@ a{
                color:#fff;
            }
          }
+    }
+
+    .fade-enter-active, .fade-leave-active {
+        transform: translateY(0px);
+    transition: all 1s;
+    }
+
+    .fade-enter,.fade-leave-to {
+        transform: translateY(-30px);
+    opacity: 0;
     }
 }
 

@@ -34,6 +34,12 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/comment/get', 'CommentsController@index');
     Route::post('/comment/create/{postId}', 'CommentsController@store');
 
+    Route::group(['middleware' => ['owner']], function(){
+
+        Route::post('/comment/delete/{commentId}/{userId}', 'CommentsController@destroy');
+
+    });
+
     Route::group(['middleware' => ['admin']], function(){ 
 
         Route::resource('/post', 'PostsController');

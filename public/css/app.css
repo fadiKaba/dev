@@ -11032,3 +11032,24 @@ body {
   background-color: #fff;
 }
 
+.login-container h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2B4B80;
+}
+
+.login-container h2 span {
+  display: inline-block;
+}
+
+.login-container h2 span.line {
+  width: 45px;
+  height: 5px;
+  border-top: 1.5px solid #2B4B80;
+  margin-right: 10px;
+}
+
+.login-container h2 span.title-h2 {
+  font-size: 3rem;
+}
+
