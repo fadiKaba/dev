@@ -38,10 +38,16 @@
                 @else
                     <li class="nav-item dropdown">
                         <a id="loginout" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }} <span class="caret"></span>
+                            <img class="rounded " src="/users-photos/{{Auth::user()->src}}" alt="" width="25px"> {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginout">
+
+                            <!-- Button trigger modal -->
+                            <a type="button" class="dropdown-item" data-toggle="modal" data-target="#user-photo-modal">
+                                Edit your photo
+                            </a>
+
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
@@ -61,7 +67,7 @@
 
 <nav class="navbar navbar-expand-md navbar-light  bg-white shadow-sm p-0 fixed-top second-nav" >
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
+        <a class="navbar-brand ml-2" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -99,10 +105,16 @@
                 @else
                     <li class="nav-item dropdown">
                         <a id="loginout" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }} <span class="caret"></span>
+                           <img class="rounded ml-2" src="/users-photos/{{Auth::user()->src}}" alt="" width="25px">  {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginout">
+
+                            <!-- Button trigger modal -->
+                            <a type="button" class="dropdown-item" data-toggle="modal" data-target="#user-photo-modal">
+                                Edit your photo
+                            </a>
+
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
@@ -114,8 +126,29 @@
                             </form>
                         </div>
                     </li>
+
                 @endguest
             </ul>
         </div>
     </div>
+    
 </nav>
+
+@if(Auth::check())
+<!-- Modal -->
+<div class="modal fade" id="user-photo-modal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content border-0 rounded-0">
+        <div class="modal-header border-0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+        <Userphoto :auth-user="{{Auth::user()}}"></Userphoto>
+        </div>       
+    </div>
+    </div>
+</div>
+<!-- end modal -->
+@endif

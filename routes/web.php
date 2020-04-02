@@ -37,6 +37,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::group(['middleware' => ['owner']], function(){
 
         Route::post('/comment/delete/{commentId}/{userId}', 'CommentsController@destroy');
+        Route::post('/authedit/{userId}', 'AppController@updateUser');
 
     });
 

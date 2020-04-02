@@ -2,7 +2,8 @@
     <div class="main-comment fade show">
         <div class="d-flex my-3 my-md-4">
             <div>
-                <img class="rounded-circle" src="/images/default-user.png" alt="user" width="70px">
+                <img v-if="authuser.src != null || authuser.src != ''" class="rounded-circle" :src="'/users-photos/'+ authuser.src" alt="user" width="70px">
+                <img v-else class="rounded-circle" src="/images/default-user.png" alt="user" width="70px">
             </div>
             <div class="pt-2 pl-2 w-100">
                 <p>{{comt.body}}</p>

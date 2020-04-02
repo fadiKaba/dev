@@ -70,7 +70,7 @@
                                cols="30" 
                                rows="10"
                                v-model="newComment" 
-                               placeholder="Write Comment">
+                               placeholder="Write a Comment">
                                </textarea>
                                <textarea 
                                v-else
@@ -79,9 +79,8 @@
                                name="body" 
                                cols="30" 
                                rows="10"
-                               v-model="newComment" 
                                placeholder="Write a Comment">
-                               </textarea>
+                               </textarea>                               
                            </div>                          
                        </form> 
                        <a v-if="!auth" href="/login" class="px-3">Login or Register</a> 
@@ -99,6 +98,7 @@
 import axios from 'axios';
 import Notauthmodal from './Notauthmodal';
 import Comment from './Comment';
+
 
 export default {
     name: 'Singlepost',
@@ -216,6 +216,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
 
 a{
     text-decoration: none;
@@ -339,9 +340,8 @@ a{
         transform: translateY(-30px);
     opacity: 0;
     }
+ 
 }
-
-
 
 
 

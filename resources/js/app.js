@@ -3,7 +3,7 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-document.re
+
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -13,6 +13,8 @@ import VueRouter from 'vue-router';
 import Home from './components/Home';
 import Blog from './components/Blog';
 import Singleblog from './components/Singleblog';
+import About from './components/About';
+import Userphoto from './components/Userphoto';
 
 
 Vue.use(VueRouter)
@@ -25,11 +27,12 @@ Vue.use(require('vue-moment'));
 
 
 
-
 const routes = [
   {path: '/', name: 'home', component: Home},
   {path: '/blog', component: Blog},
-  {path: '/singleblog/:postid', name: 'Singleblog', component: Singleblog, props: true}
+  {path:'/about', component: About},
+  {path: '/singleblog/:postid', name: 'Singleblog', component: Singleblog, props: true},
+  {path: '*', component: Home},
 ];
 
 
@@ -44,6 +47,7 @@ const router = new VueRouter({
 
 const app = new Vue({
   router,
+  components:{Userphoto},
   data: function(){
       return{
         showNav: false,
