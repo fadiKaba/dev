@@ -1,5 +1,8 @@
 <template>
        <div class="main-home py-5">
+           <div class="Loading">
+                 <Loading :res="false"></Loading>
+            </div>
            <div class="row  mt-md-5 container mx-auto">
                <div class="col-md-6 pt-md-5 showcase-title">
                    <h1>For You <br> Development Service</h1>
@@ -79,15 +82,23 @@
 <script>
 
 import axios from 'axios';
+import Loading from './Loading';
 
 export default {
     name: 'Home',
+    components:{Loading,},
+    data: function(){
+        return{
+            
+            }
+            
+    },
     mounted: function(){
-        
+        window.scrollTo(0, 0);        
     },
     methods:{
        
-    }
+    },
 }
 
 </script>

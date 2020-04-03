@@ -1,5 +1,6 @@
 <template>
     <div class="pt-5 main-services">
+        <Loading :res="false"></Loading>
         <div class="mt-5 pt-md-5">
             <div class="container">
                <h2 class="text-center mt-md-5"><span class="line"></span> Services <br>
@@ -97,15 +98,18 @@
 </template>
 <script>
 
-
+import Loading from './Loading';
 
 export default {
     name: 'Services',
-    components:{},
+    components:{Loading},
     data: function(){
         return {
 
         }
+    },
+    mounted: function(){
+        window.scrollTo(0, 0); 
     },
     methods:{
 

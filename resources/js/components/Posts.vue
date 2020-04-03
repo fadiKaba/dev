@@ -130,6 +130,9 @@ export default {
         axios.post('/getposts')
         .then((response)=>{
              this.makePostsArr(response.data);
+             if(document.readyState === "complete") {
+                this.$emit('finishloadin', true);
+            }           
         })
       },
       makePostsArr: function(arr){  

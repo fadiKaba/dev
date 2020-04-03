@@ -1,5 +1,6 @@
 <template>
        <div class="main-home py-md-5">
+           <Loading :res="false"></Loading>
            <div class="row pt-5 mt-md-5 container mx-auto">
                <div class="col-md-6 showcase-img d-none d-md-block">
                    <img class="mr-5" src="/images/about.png" alt="" width="110%">
@@ -73,11 +74,13 @@
 <script>
 
 import axios from 'axios';
+import Loading from './Loading';
 
 export default {
     name: 'About',
+    components:{Loading},
     mounted: function(){
-        
+        window.scrollTo(0, 0); 
     },
     methods:{
        

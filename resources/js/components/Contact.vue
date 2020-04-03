@@ -1,5 +1,6 @@
 <template>
     <div class="pt-5 main-blog">
+        <Loading :res="false"></Loading>
         <div class="container mt-5 pt-md-5">
             <h2 class="text-center mt-md-5"><span class="line"></span> Contact <br>
             <span class="title-h2 mt-3">Contact Us</span> 
@@ -77,15 +78,18 @@
 </template>
 <script>
 
-
+import Loading from './Loading';
 
 export default {
     name: 'Contact',
-    components:{},
+    components:{Loading},
     data: function(){
         return {
 
         }
+    },
+    mounted: function(){
+      window.scrollTo(0, 0); 
     },
     methods:{
 

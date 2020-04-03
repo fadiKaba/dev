@@ -8,6 +8,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+
+
 import VueRouter from 'vue-router';
 
 import Home from './components/Home';
@@ -31,6 +33,8 @@ Vue.use(require('vue-moment'));
 
 const routes = [
   {path: '/', name: 'home', component: Home},
+  {path: '/login'},
+  {path: '/register'},
   {path: '/blog', component: Blog},
   {path:'/about', component: About},
   {path: '/singleblog/:postid', name: 'Singleblog', component: Singleblog, props: true},
@@ -44,9 +48,9 @@ const routes = [
 const router = new VueRouter({
   routes,
   mode: 'history',
-  scrollBehavior (to, from, savedPosition) {
-    return { x: 0, y: 0 }
-  }
+  // scrollBehavior (to, from, savedPosition) {
+  //   return { x: 0, y: 0 }
+  // }
 });
 
 const app = new Vue({

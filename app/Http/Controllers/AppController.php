@@ -9,7 +9,11 @@ use Image;
 use File;
 
 class AppController extends Controller
-{
+{   
+    public function index(){
+        return view('layouts/app');
+    }
+
     public function getUser(){
         if(Auth::check()){
             return Auth::user();

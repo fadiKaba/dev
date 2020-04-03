@@ -125,6 +125,7 @@ export default {
         }
     },
     mounted: function(){       
+        window.scrollTo(0, 0); 
         this.getPost(this.postid);
         
     },
