@@ -15,6 +15,8 @@ import Blog from './components/Blog';
 import Singleblog from './components/Singleblog';
 import About from './components/About';
 import Userphoto from './components/Userphoto';
+import Services from './components/Services';
+import Contact from './components/Contact';
 
 
 Vue.use(VueRouter)
@@ -32,6 +34,8 @@ const routes = [
   {path: '/blog', component: Blog},
   {path:'/about', component: About},
   {path: '/singleblog/:postid', name: 'Singleblog', component: Singleblog, props: true},
+  {path:'/services', component: Services},
+  {path:'/Contact', component: Contact},
   {path: '*', component: Home},
 ];
 

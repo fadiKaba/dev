@@ -15,6 +15,12 @@
            </div>
            <div class="container mx-auto showcase2 py-5 mt-md-5">
                <h2 class="text-center pt-md-5 mt-md-5">Our Experience</h2>
+               <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellat vel incidunt exercitationem deserunt doloribus 
+               accusamus similique dicta commodi consectetur, asperiores, fugiat tempore magni eum repellendus, officiis minima quas? 
+               Iste laboriosam, fugiat quo velit in aperiam voluptatibus similique ut tenetur esse quam, facere asperiores ducimus 
+               reprehenderit fuga? Repellat dicta placeat molestiae?
+               </p>
                <div class="row">
                    <div class="col-md-4 mt-3">
                        <div class="card">
@@ -30,7 +36,7 @@
                         </div>
                    </div>
                    <div class="col-md-4 mt-3">
-                       <div class="card shadow">
+                       <div class="card">
                             <div class="card-body text-center">
                                 <div class="img-container">
                                     <img src="/images/tips_2.jpg" alt="" width="100%">
@@ -139,6 +145,10 @@ export default {
             color: #2B4B80;
             padding-bottom: 25px;
         }
+        p{
+            color: #707B8E;
+            font-size: 16px;
+        }
         .card{
             transition:0.3s;
             border:none;
@@ -171,7 +181,6 @@ export default {
                 
             }
             &:hover{
-                box-shadow: 5px 5px 10px rgb(219, 219, 219);
                 .img-container > img{
                     transform: scale(1.2);
                 }
@@ -180,6 +189,7 @@ export default {
         
     }
 }
+
 
 
 

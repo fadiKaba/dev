@@ -1,5 +1,5 @@
 <template>
-       <div class="main-home py-md-5">
+       <div class="main-home py-5">
            <div class="row  mt-md-5 container mx-auto">
                <div class="col-md-6 pt-md-5 showcase-title">
                    <h1>For You <br> Development Service</h1>
