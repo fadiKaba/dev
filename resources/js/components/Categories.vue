@@ -23,6 +23,7 @@ import axios from 'axios';
 
 export default {
     name: 'Categories',
+    props:['catname'],
     data: function(){
         return {
             loading: false,
@@ -62,6 +63,11 @@ export default {
                 this.loading = false;
             })
       },
+    },
+    watch:{
+        catname: function(newVal, oldVal){
+            this.getSingleCat(newVal, 1)
+        }
     }
 
 }

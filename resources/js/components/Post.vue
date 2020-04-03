@@ -49,7 +49,7 @@
                </div>
 
                 <div class="mt-3 mt-md-4 links">
-                    <a href="#" class="card-link">
+                    <a @click="emitCatName" class="card-link">
                         <img class="mr-md-1 pink" src="/ico/category-pink.svg" alt="Category" width="22px"> 
                         <img class="mr-md-1 grey" src="/ico/category.svg" alt="Category" width="22px"> 
                         {{categories[category1]+ '. ' + (categories[category2]  != undefined ? categories[category2] : '')}}
@@ -140,6 +140,9 @@ export default {
            }
            return str;
         }, 
+        emitCatName: function(){
+            this.$emit('catname', this.categories[this.category1])
+        }
     }
 }
 </script>
@@ -194,6 +197,7 @@ export default {
         }
         .links{
             a{  
+                cursor: pointer;
                 transition: 0.1s;
                 color: #707B92;
                 .pink{

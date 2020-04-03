@@ -87,6 +87,7 @@
             :category2="post.category2"
             :createdAt="post.created_at"
             v-on:deleteditem="deletedItem"
+            v-on:catname="catName"
             ></Post>
             </transition-group>
         </div>    
@@ -182,7 +183,10 @@ export default {
                   this.arrPosts.splice(i, 1);
               }
           }
-      }  
+      },
+      catName: function(val){
+        this.$emit('catname', val);
+      }
     },
     watch:{
         ress: function(newVal, oldVal){

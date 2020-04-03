@@ -22,13 +22,12 @@ Route::get('/{any}', 'AppController@index')->where('any', '.*');
 Route::post('/getuser', 'AppController@getUser');
 Route::post('/getusername{userId}', 'AppController@getUserName');
 
-
-
 Route::post('/getposts', 'PostsController@getPosts');
 Route::post('/getsinglepost/{postId}', 'PostsController@getSinglePost');
 Route::post('/searchpost/{val}', 'PostsController@searchPost');
 Route::post('/searchcat/{val}', 'PostsController@searchCat');
 Route::post('/getlikedusers/{val}', 'PostsController@getLikedUsers');
+Route::post('/mail/send', 'MailsController@send');
 
 Route::group(['middleware' => ['auth']], function(){
     

@@ -10,7 +10,12 @@
             <div class="row pt-2 pt-md-5 mt-md-5">
                 <div class="col-md-8">
                     <!-- posts-->
-                    <Posts v-on:finishloadin="finishLoading" :cress="catResults" :ress="results" :single="results.length == 1? true: false"></Posts>                                  
+                    <Posts 
+                    v-on:finishloadin="finishLoading" 
+                    :cress="catResults" :ress="results" 
+                    :single="results.length == 1? true: false"
+                    v-on:catname="catName"
+                    ></Posts>                                  
                     <!-- end posts -->
                 </div>
                 <div class="col-md-4">
@@ -19,7 +24,7 @@
                     <!-- end search -->
                     
                     <!--categories-->
-                    <Categories v-on:catresults="sendCatResults"></Categories>
+                    <Categories :catname="catN" v-on:catresults="sendCatResults"></Categories>
                     <!--end categories-->
                 </div>
             </div>
@@ -42,6 +47,7 @@ export default {
             results: '',
             catResults:'',
             loading:true,
+            catN:''
         }
     },
     mounted: function(){
@@ -56,6 +62,10 @@ export default {
         },
         finishLoading: function(){
             this.loading = false;
+        },
+        catName: function(val){
+             
+            this.catN = val;
         }
     }
     

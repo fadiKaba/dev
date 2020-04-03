@@ -155,6 +155,7 @@ export default {
         .card{
             transition:0.3s;
             border:none;
+            background-color:transparent;
             .card-body{
                 padding: 60px 0px;
                 h5{ 

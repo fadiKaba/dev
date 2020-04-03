@@ -10,15 +10,15 @@ use Illuminate\Queue\SerializesModels;
 class SupportMail extends Mailable
 {
     use Queueable, SerializesModels;
-
+    public $msg;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($msg)
     {
-        //
+        $this->msg = $msg;
     }
 
     /**
@@ -28,6 +28,6 @@ class SupportMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('auth.mail');
     }
 }

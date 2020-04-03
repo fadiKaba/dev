@@ -16,31 +16,43 @@
                 tabindex="0">
                 </iframe>
             </div>
-            <h3 class="mt-5">Get In Touch</h3>
+            <h3 class="mt-5">Get In Touch
+                <span v-if="loading" class="spinner-border text-secondary" role="status">
+                   <span class="sr-only">Loading...</span>
+                </span>
+            </h3>
+            
             <div class="row mt-md-2">
-                <div class="col-md-8">                   
+                <div class="col-md-8">  
+                    <p class="alert alert-warning" v-if="errMessage != ''">{{errMessage}}</p> 
+                    <p class="alert alert-success" v-if="succeed != ''">{{succeed}}</p>                
                     <div class="mt-2 mt-md-4">
-                        <form action="">
+                        <form action="" id="mail-form">
                             <div class="form-group">
-                                <textarea class="form-control" name="message" id="" cols="30" rows="10" placeholder="Write a message"></textarea>
+                                <textarea v-model="message" required class="form-control" name="message" id="" cols="30" rows="10" placeholder="Write a message"></textarea>
+                                <p class="alert alert-danger" v-if="errors != '' && errors.message != null">{{errors.message[0]}}</p>
                             </div>         
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input class="form-control" type="text" name="name" placeholder="Enter your name">
+                                        <input v-model="name" required class="form-control" type="text" name="name" placeholder="Enter your name">
+                                        <p class="alert alert-danger" v-if="errors != '' && errors.name != null">{{errors.name[0]}}</p>
                                     </div>                                  
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input class="form-control" type="text" name="email" placeholder="Enter your email">
+                                        <input v-model="email" required class="form-control" type="text" name="email" placeholder="Enter your email">
+                                        <p class="alert alert-danger" v-if="errors != '' && errors.email != null">{{errors.email[0]}}</p>
                                     </div>                                    
                                 </div>
                             </div>
                             <div class="form-group">
-                                <input class="form-control" type="text" name="subject" placeholder="Enter your subject">
+                                <input v-model="subject" required class="form-control" type="text" name="subject" placeholder="Enter your subject">
+                                <p class="alert alert-danger" v-if="errors != '' && errors.subject != null">{{errors.subject[0]}}</p>
                             </div>                           
                         </form>                        
                     </div>
+                    <button @click="sendMail()" class="send-btn mt-md-4">Send</button>
                 </div>
                 <div class="col-md-4 p-2 px-md-5 py-md-4">
                     <div class="d-flex mb-3 mb-md-5">
@@ -72,12 +84,12 @@
                     </div>
                 </div>
             </div>
-            <button class="send-btn mt-md-4">Send</button>
         </div>
     </div>
 </template>
 <script>
 
+import axios from 'axios';
 import Loading from './Loading';
 
 export default {
@@ -85,14 +97,49 @@ export default {
     components:{Loading},
     data: function(){
         return {
-
+           name:'',
+           subject: '',
+           message: '',
+           email:'',
+           errMessage: '',
+           errors: '',
+           succeed: '',
+           loading:false
         }
     },
     mounted: function(){
       window.scrollTo(0, 0); 
     },
     methods:{
-
+      sendMail: function(){
+          let mailForm = new FormData(document.querySelector('#mail-form'));
+          this.loading = true;
+          axios({
+             method: 'POST',
+             url: '/mail/send',
+             data: mailForm,
+             config: {headers: {'Content-Type': 'multipart/form-data'}}
+          }).then((response) => {
+              if(response.data == 'succeed'){
+                  this.succeed = 'Thank you for contacting me, your mail has been sent successfully';
+                  this.errMessage = '';
+              }else{
+                  this.errMessage = 'Somthing went wrong, please try again later'
+              }
+              this.errors = '';
+              
+              this.loading = false;
+              this.name = '';
+              this.email = '';
+              this.message = '';
+              this.subject= '';
+          }).catch((err) => {
+              if(err.response){
+                this.errMessage =  err.response.data.message,
+                this.errors = err.response.data.errors
+              }
+          })
+      }
     }
     
 }
