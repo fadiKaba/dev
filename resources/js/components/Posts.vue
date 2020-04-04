@@ -102,7 +102,7 @@ import Post from "./Post";
 export default {
     name:'Posts',
     components:{Post},
-    props:['ress', 'cress'],
+    props:['ress', 'cress','catall'],
     data: function(){
         return{
             admin: false,
@@ -155,7 +155,7 @@ export default {
         
 
       },
-      makePostsArr: function(arr, top, old){  
+      makePostsArr: function(arr, top){  
           class Post {
 
            constructor(element){
@@ -182,7 +182,7 @@ export default {
           });
           }
 
-              this.showOldBtn = old;
+             // this.showOldBtn = old;
     
           
           
@@ -233,6 +233,10 @@ export default {
           //  console.log(newVal)
             this.makePostsArr(newVal, true); 
             }           
+        },
+        catall: function(newVal, oldVal){
+            this.arrPosts = [];
+            this.getPosts();
         }
     }
 }

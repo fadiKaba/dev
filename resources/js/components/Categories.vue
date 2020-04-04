@@ -56,12 +56,14 @@ export default {
            }
         },
         getPosts: function(){
-            this.loading = true;
-            axios.post('/getposts')
-            .then((response)=>{
-                this.$emit('catresults', response.data.data);
-                this.loading = false;
-            })
+            // this.loading = true;
+            // axios.post('/getposts')
+            // .then((response)=>{
+            //     this.$emit('catresults', response.data.data);
+            //     this.loading = false;
+            // })
+           let n = 1;
+            this.$emit('catresultsall', n);
       },
     },
     watch:{

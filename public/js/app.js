@@ -2045,6 +2045,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -2062,7 +2063,9 @@ __webpack_require__.r(__webpack_exports__);
       results: '',
       catResults: '',
       loading: true,
-      catN: ''
+      catN: '',
+      catAll: '',
+      n: 1
     };
   },
   mounted: function mounted() {
@@ -2080,6 +2083,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     catName: function catName(val) {
       this.catN = val;
+    },
+    catresultsall: function catresultsall(val) {
+      this.catAll = val + this.n;
+      this.n++;
     }
   }
 });
@@ -2159,14 +2166,14 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     getPosts: function getPosts() {
-      var _this3 = this;
-
-      this.loading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/getposts').then(function (response) {
-        _this3.$emit('catresults', response.data.data);
-
-        _this3.loading = false;
-      });
+      // this.loading = true;
+      // axios.post('/getposts')
+      // .then((response)=>{
+      //     this.$emit('catresults', response.data.data);
+      //     this.loading = false;
+      // })
+      var n = 1;
+      this.$emit('catresultsall', n);
     }
   },
   watch: {
@@ -2876,7 +2883,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   components: {
     Post: _Post__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['ress', 'cress'],
+  props: ['ress', 'cress', 'catall'],
   data: function data() {
     return {
       admin: false,
@@ -2936,7 +2943,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         });
       }
     },
-    makePostsArr: function makePostsArr(arr, top, old) {
+    makePostsArr: function makePostsArr(arr, top) {
       var _this4 = this;
 
       var Post = function Post(element) {
@@ -2964,9 +2971,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           _this4.arrPosts.unshift(objPostReady);
         });
-      }
+      } // this.showOldBtn = old;
 
-      this.showOldBtn = old;
     },
     addNewPost: function addNewPost() {
       var _this5 = this;
@@ -3021,6 +3027,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         this.makePostsArr(newVal, true);
       }
+    },
+    catall: function catall(newVal, oldVal) {
+      this.arrPosts = [];
+      this.getPosts();
     }
   }
 });
@@ -58042,7 +58052,8 @@ var render = function() {
               attrs: {
                 cress: _vm.catResults,
                 ress: _vm.results,
-                single: _vm.results.length == 1 ? true : false
+                single: _vm.results.length == 1 ? true : false,
+                catall: _vm.catAll
               },
               on: { finishloadin: _vm.finishLoading, catname: _vm.catName }
             })
@@ -58058,7 +58069,10 @@ var render = function() {
             _vm._v(" "),
             _c("Categories", {
               attrs: { catname: _vm.catN },
-              on: { catresults: _vm.sendCatResults }
+              on: {
+                catresultsall: _vm.catresultsall,
+                catresults: _vm.sendCatResults
+              }
             })
           ],
           1
@@ -60097,7 +60111,51 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(0)
+                _c("div", { staticClass: "col-md-6 text-right" }, [
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        target: "_blank",
+                        href:
+                          "https://www.facebook.com/sharer/sharer.php?u=http%3A//blife.dx.am/singleblog/" +
+                          _vm.postId
+                      }
+                    },
+                    [
+                      _c("img", {
+                        attrs: {
+                          src: "/ico/facebook.svg",
+                          alt: "like",
+                          width: "25px"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        target: "_blank",
+                        href:
+                          "https://twitter.com/intent/tweet?text=http%3A//blife.dx.am/singleblog/" +
+                          _vm.postId
+                      }
+                    },
+                    [
+                      _c("img", {
+                        attrs: {
+                          src: "/ico/twitter.svg",
+                          alt: "like",
+                          width: "25px"
+                        }
+                      })
+                    ]
+                  )
+                ])
               ]
             ),
             _vm._v(" "),
@@ -60209,24 +60267,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6 text-right" }, [
-      _c("a", { attrs: { href: "" } }, [
-        _c("img", {
-          attrs: { src: "/ico/facebook.svg", alt: "like", width: "25px" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "" } }, [
-        _c("img", {
-          attrs: { src: "/ico/instagram.svg", alt: "like", width: "25px" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("a", { attrs: { href: "" } }, [
-        _c("img", {
-          attrs: { src: "/ico/twitter.svg", alt: "like", width: "25px" }
-        })
-      ])
+    return _c("a", { attrs: { target: "_blank", href: "" } }, [
+      _c("img", {
+        attrs: { src: "/ico/instagram.svg", alt: "like", width: "25px" }
+      })
     ])
   }
 ]
@@ -81656,8 +81700,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\projects\project4\dev\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\projects\project4\dev\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\coding\projects\projects4\fresh-laravel-copy\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\coding\projects\projects4\fresh-laravel-copy\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

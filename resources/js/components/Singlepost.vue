@@ -39,13 +39,13 @@
                             </span> 
                     </div>
                    <div class="col-md-6 text-right">
-                       <a href="">
+                       <a target="_blank" :href="'https://www.facebook.com/sharer/sharer.php?u=http%3A//blife.dx.am/singleblog/'+postId">
                            <img src="/ico/facebook.svg" alt="like" width="25px">
                         </a>
-                        <a href="">
+                        <a target="_blank" href="">
                            <img src="/ico/instagram.svg" alt="like" width="25px">
                         </a>
-                        <a href="">
+                        <a target="_blank" :href="'https://twitter.com/intent/tweet?text=http%3A//blife.dx.am/singleblog/'+postId">
                            <img src="/ico/twitter.svg" alt="like" width="25px">
                         </a>
                    </div>

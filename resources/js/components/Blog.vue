@@ -15,6 +15,7 @@
                     :cress="catResults" :ress="results" 
                     :single="results.length == 1? true: false"
                     v-on:catname="catName"
+                    :catall="catAll"
                     ></Posts>                                  
                     <!-- end posts -->
                 </div>
@@ -24,7 +25,7 @@
                     <!-- end search -->
                     
                     <!--categories-->
-                    <Categories :catname="catN" v-on:catresults="sendCatResults"></Categories>
+                    <Categories v-on:catresultsall="catresultsall" :catname="catN" v-on:catresults="sendCatResults"></Categories>
                     <!--end categories-->
                 </div>
             </div>
@@ -47,7 +48,9 @@ export default {
             results: '',
             catResults:'',
             loading:true,
-            catN:''
+            catN:'',
+            catAll:'',
+            n:1
         }
     },
     mounted: function(){
@@ -66,6 +69,10 @@ export default {
         catName: function(val){
              
             this.catN = val;
+        },
+        catresultsall: function(val){           
+            this.catAll = val + this.n;
+            this.n++;
         }
     }
     
