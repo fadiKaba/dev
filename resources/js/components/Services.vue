@@ -64,7 +64,7 @@
                             <img src="/images/visit_2.jpg" class="card-img" alt="...">
                             <div class="card-img-overlay">
                                 <div class="">
-                                   <h5 class="card-title"><a href="http://blife.dx.am" target="_blank">Better Life</a></h5>
+                                   <h5 class="card-title"><a href="https://fadikaba.github.io/samiweb/" target="_blank">Nice Website</a></h5>
                                    <p class="card-text">Be a part of our comunity</p> 
                                 </div>                              
                             </div>
@@ -75,7 +75,7 @@
                             <img src="/images/visit_3.jpg" class="card-img" alt="...">
                             <div class="card-img-overlay">
                                 <div class="">
-                                   <h5 class="card-title"><a href="http://blife.dx.am" target="_blank">Better Life</a></h5>
+                                   <h5 class="card-title"><a href="https://fadikaba.github.io/cas/games/roll/roll.html" target="_blank">Cas Roll</a></h5>
                                    <p class="card-text">Be a part of our comunity</p> 
                                 </div>                              
                             </div>

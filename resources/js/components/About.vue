@@ -11,7 +11,7 @@
                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
                        Quisquam odio placeat atque fuga mollitia distinctio eveniet quae eligendi a quo?
                    </p>
-                   <button class="btn showcase-btn">Contact Us</button>
+                   <router-link to="/contact" class="btn showcase-btn">Contact Us</router-link>
                </div>               
            </div>
            <div class="container mx-auto showcase2 py-5 mt-md-5">

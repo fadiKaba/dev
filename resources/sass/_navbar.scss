@@ -14,6 +14,15 @@
 nav{
     transition: 1s;
     .container{
+        .navbar-brand{
+            color:#7B40C0;
+            font-weight: 700;
+            transition: 0.3s;
+            cursor: pointer;
+            &:hover{
+                color: #FD5D96;
+            }
+        }
         ul{
             li{ 
                 padding: 10px 0;

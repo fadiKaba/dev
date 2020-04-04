@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row my-5 py-5">
             <div class="col-md-3">
-                <h4>Devy Tools</h4>
+                <h4><a class="navbar-brand" href="/home"><img src="/images/logo.png" alt="logo" width="50px"> {{ config('app.name', 'FK.DEVELOPMENT') }}</a></h4>
                 <p>fadikaba9@google.com</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                 <div class="social-container">

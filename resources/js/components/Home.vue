@@ -10,7 +10,7 @@
                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. 
                        Quisquam odio placeat atque fuga mollitia distinctio eveniet quae eligendi a quo?
                    </p>
-                   <button class="btn showcase-btn">Descover More</button>
+                   <router-link to="/services" class="btn showcase-btn">Descover More</router-link>
                </div>
                <div class="col-md-6 showcase-img d-none d-md-block">
                    <img class="ml-5" src="/images/showcase.png" alt="" width="110%">
@@ -72,6 +72,24 @@
                    </div>
                </div>
            </div>
+           <div class="container pink-showcase mt-2 mt-md-5">
+                <div class="jumbotron jumbotron-fluid p-2 p-md-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <h4 class="display-4">Whats in your mind?</h4>
+                                <p class="lead">
+                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere adipisci ab,
+                                     consectetur non dolorem rem sequi aperiam vitae quod eos?
+                                </p>
+                            </div>
+                            <div class="col-md-3 align-self-center">
+                                <router-link to="/contact" class="btn btn-lg">Contact Us</router-link>
+                            </div>
+                        </div>                    
+                    </div>
+                </div>
+            </div>
        </div>
 </template>
 
@@ -210,6 +228,26 @@ export default {
                     
                 }
             }
+        }
+        
+    }
+    .pink-showcase{
+        .jumbotron{
+           background-image: linear-gradient(to right ,rgba(253, 99, 155, 0.945), rgba(133, 75, 194, 0.945)), url('/images/office.jpg') ; 
+           background-size: cover;
+           background-position: center;
+           background-repeat: no-repeat;
+           color:#fff;
+           border-radius: 8px;
+           a{
+               background-color: #fff;
+               color: #854BC2;
+               transition: 0.3s;
+               &:hover{
+                   color: #fff;
+                   background-color: #FD639C;
+               }
+           }
         }
         
     }

@@ -1,6 +1,7 @@
 <template>
-    <div class="main-loading" v-if="loading || res">
+    <div class="main-loading" v-if="loading || res">       
         <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+            <img src="/images/logo.png" alt="logo" width="25px" >
            <span class="sr-only">Loading...</span>
         </div>
     </div>

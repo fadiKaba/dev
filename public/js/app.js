@@ -2498,6 +2498,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2525,6 +2543,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -8262,7 +8281,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".main-home[data-v-f2b6376c] {\n  background-image: url(\"/images/shape2.png\");\n  background-size: contain;\n  background-position: right;\n  background-repeat: no-repeat;\n}\n.main-home .row .showcase-title h1[data-v-f2b6376c] {\n  -webkit-animation: fromLeft-data-v-f2b6376c 1s ease backwards;\n          animation: fromLeft-data-v-f2b6376c 1s ease backwards;\n  font-weight: 700;\n  font-size: 4rem;\n  color: #2B4B80;\n  padding-bottom: 25px;\n}\n.main-home .row .showcase-title p[data-v-f2b6376c] {\n  -webkit-animation: fromLeft-data-v-f2b6376c 1s 0.2s ease backwards;\n          animation: fromLeft-data-v-f2b6376c 1s 0.2s ease backwards;\n  color: #707B8E;\n  font-size: 16px;\n}\n.main-home .row .showcase-title .showcase-btn[data-v-f2b6376c] {\n  -webkit-animation: fromLeft-data-v-f2b6376c 1s 0.5s ease backwards;\n          animation: fromLeft-data-v-f2b6376c 1s 0.5s ease backwards;\n  background-color: #ee5d93;\n  color: #fff;\n  padding: 15px 30px;\n  font-size: 16px;\n  transition: 0.2s;\n}\n.main-home .row .showcase-title .showcase-btn[data-v-f2b6376c]:hover {\n  background-color: #EC4683;\n  color: #fff;\n}\n.main-home .row .showcase-img[data-v-f2b6376c] {\n  -webkit-animation: fromRight-data-v-f2b6376c 1s 0.3s ease backwards;\n          animation: fromRight-data-v-f2b6376c 1s 0.3s ease backwards;\n}\n.main-home .showcase2 h2[data-v-f2b6376c] {\n  -webkit-animation: fromLeft-data-v-f2b6376c 1s ease backwards;\n          animation: fromLeft-data-v-f2b6376c 1s ease backwards;\n  font-weight: 700;\n  font-size: 3rem;\n  color: #2B4B80;\n  padding-bottom: 25px;\n}\n.main-home .showcase2 .card[data-v-f2b6376c] {\n  transition: 0.3s;\n  border: none;\n}\n.main-home .showcase2 .card .card-body[data-v-f2b6376c] {\n  padding: 60px 0px;\n}\n.main-home .showcase2 .card .card-body h5[data-v-f2b6376c] {\n  padding: 40px 0px;\n  font-weight: 700;\n  font-size: 1.4rem;\n  color: #2B4B80;\n  padding-bottom: 25px;\n}\n.main-home .showcase2 .card .card-body p[data-v-f2b6376c] {\n  color: #707B8D;\n  line-height: 25px;\n  font-size: 1rem;\n}\n.main-home .showcase2 .card .card-body a[data-v-f2b6376c] {\n  cursor: pointer;\n  color: #E3E9ED;\n  font-size: 1rem;\n  padding: 5px;\n}\n.main-home .showcase2 .card .card-body a .row[data-v-f2b6376c] {\n  transition: 0.3s;\n}\n.main-home .showcase2 .card .card-body a .row .img-arrow[data-v-f2b6376c] {\n  background-image: url(\"/ico/arrow-light.svg\");\n  background-size: contain;\n  background-position: bottom;\n  background-repeat: no-repeat;\n  width: 25px;\n  height: 25px;\n  transition: 0.3s;\n}\n.main-home .showcase2 .card[data-v-f2b6376c]:hover {\n  box-shadow: 5px 5px 10px #dbdbdb;\n}\n.main-home .showcase2 .card:hover a .row[data-v-f2b6376c] {\n  color: #7B40C0;\n}\n.main-home .showcase2 .card:hover a .row .img-arrow[data-v-f2b6376c] {\n  background-image: url(\"/ico/next.svg\");\n}\n@-webkit-keyframes fromRight-data-v-f2b6376c {\n0% {\n    transform: translateX(50vw);\n}\n100% {\n    transform: translateX(0px);\n}\n}\n@keyframes fromRight-data-v-f2b6376c {\n0% {\n    transform: translateX(50vw);\n}\n100% {\n    transform: translateX(0px);\n}\n}\n@-webkit-keyframes fromLeft-data-v-f2b6376c {\n0% {\n    transform: translateX(-1000px);\n}\n100% {\n    transform: translateX(0px);\n}\n}\n@keyframes fromLeft-data-v-f2b6376c {\n0% {\n    transform: translateX(-1000px);\n}\n100% {\n    transform: translateX(0px);\n}\n}\n@media screen and (max-width: 750px) {\n.main-home[data-v-f2b6376c] {\n    background-image: none;\n}\n.main-home .row[data-v-f2b6376c] {\n    padding-left: 0;\n    padding-right: 0;\n}\n.main-home .row .showcase-title h1[data-v-f2b6376c] {\n    font-size: 2rem;\n}\n.main-home .row .showcase-title p[data-v-f2b6376c] {\n    font-size: 16px;\n}\n.main-home .row .showcase-title .showcase-btn[data-v-f2b6376c] {\n    background-color: #ee5d93;\n    color: #fff;\n    padding: 15px 30px;\n    font-size: 16px;\n    transition: 0.2s;\n}\n.main-home .row .showcase-title .showcase-btn[data-v-f2b6376c]:hover {\n    background-color: #EC4683;\n    color: #fff;\n}\n.main-home .showcase2 h2[data-v-f2b6376c] {\n    font-size: 2rem;\n}\n}", ""]);
+exports.push([module.i, ".main-home[data-v-f2b6376c] {\n  background-image: url(\"/images/shape2.png\");\n  background-size: contain;\n  background-position: right;\n  background-repeat: no-repeat;\n}\n.main-home .row .showcase-title h1[data-v-f2b6376c] {\n  -webkit-animation: fromLeft-data-v-f2b6376c 1s ease backwards;\n          animation: fromLeft-data-v-f2b6376c 1s ease backwards;\n  font-weight: 700;\n  font-size: 4rem;\n  color: #2B4B80;\n  padding-bottom: 25px;\n}\n.main-home .row .showcase-title p[data-v-f2b6376c] {\n  -webkit-animation: fromLeft-data-v-f2b6376c 1s 0.2s ease backwards;\n          animation: fromLeft-data-v-f2b6376c 1s 0.2s ease backwards;\n  color: #707B8E;\n  font-size: 16px;\n}\n.main-home .row .showcase-title .showcase-btn[data-v-f2b6376c] {\n  -webkit-animation: fromLeft-data-v-f2b6376c 1s 0.5s ease backwards;\n          animation: fromLeft-data-v-f2b6376c 1s 0.5s ease backwards;\n  background-color: #ee5d93;\n  color: #fff;\n  padding: 15px 30px;\n  font-size: 16px;\n  transition: 0.2s;\n}\n.main-home .row .showcase-title .showcase-btn[data-v-f2b6376c]:hover {\n  background-color: #EC4683;\n  color: #fff;\n}\n.main-home .row .showcase-img[data-v-f2b6376c] {\n  -webkit-animation: fromRight-data-v-f2b6376c 1s 0.3s ease backwards;\n          animation: fromRight-data-v-f2b6376c 1s 0.3s ease backwards;\n}\n.main-home .showcase2 h2[data-v-f2b6376c] {\n  -webkit-animation: fromLeft-data-v-f2b6376c 1s ease backwards;\n          animation: fromLeft-data-v-f2b6376c 1s ease backwards;\n  font-weight: 700;\n  font-size: 3rem;\n  color: #2B4B80;\n  padding-bottom: 25px;\n}\n.main-home .showcase2 .card[data-v-f2b6376c] {\n  transition: 0.3s;\n  border: none;\n}\n.main-home .showcase2 .card .card-body[data-v-f2b6376c] {\n  padding: 60px 0px;\n}\n.main-home .showcase2 .card .card-body h5[data-v-f2b6376c] {\n  padding: 40px 0px;\n  font-weight: 700;\n  font-size: 1.4rem;\n  color: #2B4B80;\n  padding-bottom: 25px;\n}\n.main-home .showcase2 .card .card-body p[data-v-f2b6376c] {\n  color: #707B8D;\n  line-height: 25px;\n  font-size: 1rem;\n}\n.main-home .showcase2 .card .card-body a[data-v-f2b6376c] {\n  cursor: pointer;\n  color: #E3E9ED;\n  font-size: 1rem;\n  padding: 5px;\n}\n.main-home .showcase2 .card .card-body a .row[data-v-f2b6376c] {\n  transition: 0.3s;\n}\n.main-home .showcase2 .card .card-body a .row .img-arrow[data-v-f2b6376c] {\n  background-image: url(\"/ico/arrow-light.svg\");\n  background-size: contain;\n  background-position: bottom;\n  background-repeat: no-repeat;\n  width: 25px;\n  height: 25px;\n  transition: 0.3s;\n}\n.main-home .showcase2 .card[data-v-f2b6376c]:hover {\n  box-shadow: 5px 5px 10px #dbdbdb;\n}\n.main-home .showcase2 .card:hover a .row[data-v-f2b6376c] {\n  color: #7B40C0;\n}\n.main-home .showcase2 .card:hover a .row .img-arrow[data-v-f2b6376c] {\n  background-image: url(\"/ico/next.svg\");\n}\n.main-home .pink-showcase .jumbotron[data-v-f2b6376c] {\n  background-image: linear-gradient(to right, rgba(253, 99, 155, 0.945), rgba(133, 75, 194, 0.945)), url(\"/images/office.jpg\");\n  background-size: cover;\n  background-position: center;\n  background-repeat: no-repeat;\n  color: #fff;\n  border-radius: 8px;\n}\n.main-home .pink-showcase .jumbotron a[data-v-f2b6376c] {\n  background-color: #fff;\n  color: #854BC2;\n  transition: 0.3s;\n}\n.main-home .pink-showcase .jumbotron a[data-v-f2b6376c]:hover {\n  color: #fff;\n  background-color: #FD639C;\n}\n@-webkit-keyframes fromRight-data-v-f2b6376c {\n0% {\n    transform: translateX(50vw);\n}\n100% {\n    transform: translateX(0px);\n}\n}\n@keyframes fromRight-data-v-f2b6376c {\n0% {\n    transform: translateX(50vw);\n}\n100% {\n    transform: translateX(0px);\n}\n}\n@-webkit-keyframes fromLeft-data-v-f2b6376c {\n0% {\n    transform: translateX(-1000px);\n}\n100% {\n    transform: translateX(0px);\n}\n}\n@keyframes fromLeft-data-v-f2b6376c {\n0% {\n    transform: translateX(-1000px);\n}\n100% {\n    transform: translateX(0px);\n}\n}\n@media screen and (max-width: 750px) {\n.main-home[data-v-f2b6376c] {\n    background-image: none;\n}\n.main-home .row[data-v-f2b6376c] {\n    padding-left: 0;\n    padding-right: 0;\n}\n.main-home .row .showcase-title h1[data-v-f2b6376c] {\n    font-size: 2rem;\n}\n.main-home .row .showcase-title p[data-v-f2b6376c] {\n    font-size: 16px;\n}\n.main-home .row .showcase-title .showcase-btn[data-v-f2b6376c] {\n    background-color: #ee5d93;\n    color: #fff;\n    padding: 15px 30px;\n    font-size: 16px;\n    transition: 0.2s;\n}\n.main-home .row .showcase-title .showcase-btn[data-v-f2b6376c]:hover {\n    background-color: #EC4683;\n    color: #fff;\n}\n.main-home .showcase2 h2[data-v-f2b6376c] {\n    font-size: 2rem;\n}\n}", ""]);
 
 // exports
 
@@ -57887,7 +57906,30 @@ var render = function() {
     [
       _c("Loading", { attrs: { res: false } }),
       _vm._v(" "),
-      _vm._m(0),
+      _c("div", { staticClass: "row pt-5 mt-md-5 container mx-auto" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-md-6 pt-md-5 showcase-title" },
+          [
+            _c("h1", [_vm._v("About Our Development Service")]),
+            _vm._v(" "),
+            _c("p", { staticClass: "pb-5 text-left" }, [
+              _vm._v(
+                "\n                Lorem, ipsum dolor sit amet consectetur adipisicing elit. \n                Quisquam odio placeat atque fuga mollitia distinctio eveniet quae eligendi a quo?\n            "
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              { staticClass: "btn showcase-btn", attrs: { to: "/contact" } },
+              [_vm._v("Contact Us")]
+            )
+          ],
+          1
+        )
+      ]),
       _vm._v(" "),
       _vm._m(1)
     ],
@@ -57899,28 +57941,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row pt-5 mt-md-5 container mx-auto" }, [
-      _c("div", { staticClass: "col-md-6 showcase-img d-none d-md-block" }, [
+    return _c(
+      "div",
+      { staticClass: "col-md-6 showcase-img d-none d-md-block" },
+      [
         _c("img", {
           staticClass: "mr-5",
           attrs: { src: "/images/about.png", alt: "", width: "110%" }
         })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6 pt-md-5 showcase-title" }, [
-        _c("h1", [_vm._v("About Our Development Service")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "pb-5 text-left" }, [
-          _vm._v(
-            "\n                Lorem, ipsum dolor sit amet consectetur adipisicing elit. \n                Quisquam odio placeat atque fuga mollitia distinctio eveniet quae eligendi a quo?\n            "
-          )
-        ]),
-        _vm._v(" "),
-        _c("button", { staticClass: "btn showcase-btn" }, [
-          _vm._v("Contact Us")
-        ])
-      ])
-    ])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -58591,9 +58621,55 @@ var render = function() {
       1
     ),
     _vm._v(" "),
-    _vm._m(0),
+    _c("div", { staticClass: "row  mt-md-5 container mx-auto" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-6 pt-md-5 showcase-title" },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("p", { staticClass: "pb-5" }, [
+            _vm._v(
+              "\n                Lorem, ipsum dolor sit amet consectetur adipisicing elit. \n                Quisquam odio placeat atque fuga mollitia distinctio eveniet quae eligendi a quo?\n            "
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "router-link",
+            { staticClass: "btn showcase-btn", attrs: { to: "/services" } },
+            [_vm._v("Descover More")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm._m(1)
+    ]),
     _vm._v(" "),
-    _vm._m(1)
+    _vm._m(2),
+    _vm._v(" "),
+    _c("div", { staticClass: "container pink-showcase mt-2 mt-md-5" }, [
+      _c("div", { staticClass: "jumbotron jumbotron-fluid p-2 p-md-5" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-3 align-self-center" },
+              [
+                _c(
+                  "router-link",
+                  { staticClass: "btn btn-lg", attrs: { to: "/contact" } },
+                  [_vm._v("Contact Us")]
+                )
+              ],
+              1
+            )
+          ])
+        ])
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -58601,32 +58677,26 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row  mt-md-5 container mx-auto" }, [
-      _c("div", { staticClass: "col-md-6 pt-md-5 showcase-title" }, [
-        _c("h1", [
-          _vm._v("For You "),
-          _c("br"),
-          _vm._v(" Development Service")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "pb-5" }, [
-          _vm._v(
-            "\n                Lorem, ipsum dolor sit amet consectetur adipisicing elit. \n                Quisquam odio placeat atque fuga mollitia distinctio eveniet quae eligendi a quo?\n            "
-          )
-        ]),
-        _vm._v(" "),
-        _c("button", { staticClass: "btn showcase-btn" }, [
-          _vm._v("Descover More")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6 showcase-img d-none d-md-block" }, [
+    return _c("h1", [
+      _vm._v("For You "),
+      _c("br"),
+      _vm._v(" Development Service")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-md-6 showcase-img d-none d-md-block" },
+      [
         _c("img", {
           staticClass: "ml-5",
           attrs: { src: "/images/showcase.png", alt: "", width: "110%" }
         })
-      ])
-    ])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -58735,6 +58805,20 @@ var staticRenderFns = [
         ])
       ]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-9" }, [
+      _c("h4", { staticClass: "display-4" }, [_vm._v("Whats in your mind?")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "lead" }, [
+        _vm._v(
+          "\n                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere adipisci ab,\n                              consectetur non dolorem rem sequi aperiam vitae quod eos?\n                         "
+        )
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -58774,7 +58858,13 @@ var staticRenderFns = [
         staticStyle: { width: "3rem", height: "3rem" },
         attrs: { role: "status" }
       },
-      [_c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])]
+      [
+        _c("img", {
+          attrs: { src: "/images/logo.png", alt: "logo", width: "25px" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "sr-only" }, [_vm._v("Loading...")])
+      ]
     )
   }
 ]
@@ -59793,9 +59883,12 @@ var staticRenderFns = [
                     _c(
                       "a",
                       {
-                        attrs: { href: "http://blife.dx.am", target: "_blank" }
+                        attrs: {
+                          href: "https://fadikaba.github.io/samiweb/",
+                          target: "_blank"
+                        }
                       },
-                      [_vm._v("Better Life")]
+                      [_vm._v("Nice Website")]
                     )
                   ]),
                   _vm._v(" "),
@@ -59820,9 +59913,13 @@ var staticRenderFns = [
                     _c(
                       "a",
                       {
-                        attrs: { href: "http://blife.dx.am", target: "_blank" }
+                        attrs: {
+                          href:
+                            "https://fadikaba.github.io/cas/games/roll/roll.html",
+                          target: "_blank"
+                        }
                       },
-                      [_vm._v("Better Life")]
+                      [_vm._v("Cas Roll")]
                     )
                   ]),
                   _vm._v(" "),
@@ -81700,8 +81797,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\coding\projects\projects4\fresh-laravel-copy\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\coding\projects\projects4\fresh-laravel-copy\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\projects\project4\dev\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\projects\project4\dev\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

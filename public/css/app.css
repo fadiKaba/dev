@@ -10886,6 +10886,17 @@ nav {
   transition: 1s;
 }
 
+nav .container .navbar-brand {
+  color: #7B40C0;
+  font-weight: 700;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+nav .container .navbar-brand:hover {
+  color: #FD5D96;
+}
+
 nav .container ul li {
   padding: 10px 0;
 }
@@ -10985,6 +10996,17 @@ nav .container ul .dropdown button:hover {
   background-image: url("/images/dots.png");
   background-size: contain;
   background-position: center;
+}
+
+.footer-main .row div .navbar-brand {
+  color: #7B40C0;
+  font-weight: 700;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.footer-main .row div .navbar-brand:hover {
+  color: #FD5D96;
 }
 
 .footer-main .row div h4 {
