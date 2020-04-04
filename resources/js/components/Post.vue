@@ -55,11 +55,11 @@
                         {{categories[category1]+ '. ' + (categories[category2]  != undefined ? categories[category2] : '')}}
                     </a>
                     <span class="mx-md-2"></span>
-                    <a href="#" class="card-link">
+                    <router-link :to="'/singleblog/'+id">
                         <img class="mr-md-1 pink" src="/ico/comment-pink.svg" alt="comments" width="22px">
                         <img class="mr-md-1 grey" src="/ico/comment.svg" alt="comments" width="22px">                       
-                        03 Comments
-                    </a>
+                        <span class="border-0 mr-2" v-if="likesCount > 0">{{likesCount}}</span> Comments
+                    </router-link>
                     <div v-if="admin" class="mt-3">
                         <button  class="btn btn-dark ml-3" @click="showEdit()">Edit</button>
                         <button  class="btn btn-danger ml-3" @click="deletePost(id)">Delete</button>
@@ -83,6 +83,7 @@ export default {
           srcVar: this.src,
           category1Val: this.category1,
           category2Val: this.category2,
+          likesCount: '',
           editMode: false,
           successMessage: '',
           errMessage:'',
@@ -92,7 +93,7 @@ export default {
         }
     },
     mounted:function(){
-
+     this.commentsLength(this.id);
     },
     methods:{
         deletePost: function(postId){
@@ -104,6 +105,12 @@ export default {
                 }) 
            }
            
+        },
+        commentsLength: function(postId){
+           axios.post(`/commentLength/${postId}`)
+           .then((response)=> {
+               this.likesCount = response.data;
+           })
         },
         showEdit: function(){
           this.editMode = !this.editMode;

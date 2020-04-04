@@ -19,7 +19,7 @@ export default {
         let myInt = setInterval(()=>{
           this.readyS = document.readyState
           if(this.readyS === 'complete'){
-              this.loading = false;
+             this.loading = false;
            clearInterval(myInt);
         }   
         },100)  
@@ -28,14 +28,17 @@ export default {
 </script>
 <style lang="scss" scoped>
    .main-loading{
+       position: fixed;
        height: 100vh;
        width: 100vw;
        background-color: #fff;
        display: flex;
        align-items: center;
        justify-content: center;
+       z-index: 100;
        .spinner-border{
           color: #EC4683;
+          
        }
    }
 </style>

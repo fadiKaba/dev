@@ -91,7 +91,8 @@
             ></Post>
             </transition-group>
         </div>    
-        <!-- end posts -->      
+        <!-- end posts -->   
+        <button v-if="currentPage < totalPages" @click="getOlder" class="btn older">Older</button>   
     </div>
 </template>
 <script>
@@ -112,6 +113,8 @@ export default {
             errMessage:'',
             errs:'',
             arrPosts:[],
+            totalPages:1,
+            currentPage:1,
         }
     },
     mounted: function(){
@@ -130,13 +133,29 @@ export default {
       getPosts: function(){
         axios.post('/getposts')
         .then((response)=>{
-             this.makePostsArr(response.data);
+             this.makePostsArr(response.data.data, true);
              if(document.readyState === "complete") {
                 this.$emit('finishloadin', true);
-            }           
+            }   
+             this.totalPages = response.data.last_page;
+             this.currentPage = response.data.current_page;        
         })
       },
-      makePostsArr: function(arr){  
+      getOlder: function(){
+          if(this.currentPage < this.totalPages){
+              axios.post(`/getposts?page=${this.currentPage + 1}`)
+                .then((response)=>{
+                    this.makePostsArr(response.data.data, true);
+                    if(document.readyState === "complete") {
+                        this.$emit('finishloadin', true);
+                    }   
+                     this.currentPage += 1; 
+                })
+          }
+        
+
+      },
+      makePostsArr: function(arr, top, old){  
           class Post {
 
            constructor(element){
@@ -145,15 +164,28 @@ export default {
                    this.src = element.src;
                    this.title = element.title;
                    this.body = element.body;
-                   this.category1 = element.category1,
-                   this.category2 = element.category2,
-                   this.createdAt = element.created_at
+                   this.category1 = element.category1;
+                   this.category2 = element.category2;
+                   this.createdAt = element.created_at;
                 }
-          }        
-          arr.forEach(element => {
+          }  
+
+          if(top == true){
+             arr.forEach(element => {
               let objPostReady = new Post(element);
-              this.arrPosts.unshift(objPostReady)
+              this.arrPosts.push(objPostReady);
+          }); 
+          }else{
+              arr.forEach(element => {
+              let objPostReady = new Post(element);
+              this.arrPosts.unshift(objPostReady);
           });
+          }
+
+              this.showOldBtn = old;
+    
+          
+          
       },
       addNewPost: function(){
           let postFormData = new FormData(this.$refs.addPostForm);
@@ -192,19 +224,20 @@ export default {
         ress: function(newVal, oldVal){
             if(newVal != ''){
                this.arrPosts = [];
-            this.makePostsArr(newVal); 
+            this.makePostsArr(newVal, true); 
             }           
         },
         cress: function(newVal, oldVal){
             if(newVal != ''){
                this.arrPosts = [];
-            this.makePostsArr(newVal); 
+          //  console.log(newVal)
+            this.makePostsArr(newVal, true); 
             }           
         }
     }
 }
 </script>
-<style scoped>
+<style lang="scss" scoped>
 
     .fade-enter-active, .fade-leave-active {
         transform: translateY(0px);
@@ -215,5 +248,19 @@ export default {
         transform: translateY(-10px);
     opacity: 0;
     }
+
+     .older{
+           width:100%;
+           height: 60px;
+           border-radius: 0;
+           border: 1px #FF5C97 solid;
+           color:#FF5C97;
+           letter-spacing: 5px;
+           text-transform: uppercase;
+           &:hover{
+               background-color: #FF5C97;
+               color:#fff;
+           }
+         }
 
 </style>

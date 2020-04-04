@@ -13,10 +13,10 @@
                             {{categories[category1] + '. ' + (categories[category2]  != undefined ? categories[category2] : '')}}
                         </a>
                         <span class="mx-md-2"></span>
-                        <a href="#" class="card-link">
+                        <a class="card-link">
                             <img class="mr-md-1 pink" src="/ico/comment-pink.svg" alt="comments" width="22px">
                             <img class="mr-md-1 grey" src="/ico/comment.svg" alt="comments" width="22px">                       
-                            03 Comments
+                            <span class="border-0 mr-2" v-if="comments.length > 0">{{comments.length}}</span> Comments
                         </a>       
                    </div>
                    <p class="card-text">{{body}}</p>               
@@ -192,6 +192,7 @@ export default {
               })
               .then((response) => {
                   this.makeCommentsArr([response.data]);
+                  this.newComment = '';
               })
           }
         },

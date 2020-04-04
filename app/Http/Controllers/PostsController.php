@@ -154,7 +154,7 @@ class PostsController extends Controller
 
     public function getPosts(){
 
-        $posts = Post::All();
+        $posts = Post::orderBy('created_at', 'desc')->paginate(2);
         return $posts;
     }
 
@@ -208,5 +208,13 @@ class PostsController extends Controller
       $arr = explode(',', $val);
       $users = User::whereIn('id', $arr)->get();
       return $users;
+    }
+
+    public function commentsLength($postId){
+
+      $post = Post::where('id', $postId)->with('comment')->get();
+
+     return count($post[0]['comment']) ;
+
     }
 }

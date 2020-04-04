@@ -15,7 +15,6 @@
                 <li><router-link to="/services">Services</router-link></li>
                 <li><router-link to="/contact">Contact</router-link></li>
                 <li><router-link to="/blog">Blog</router-link></li>
-                <li><router-link to="/pages">Page</router-link></li>
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -95,7 +94,6 @@
                             Login Or Register
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <router-link to="/login">Login</router-link>
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             @if (Route::has('register'))
                             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>

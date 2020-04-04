@@ -59,7 +59,7 @@ export default {
             this.loading = true;
             axios.post('/getposts')
             .then((response)=>{
-                this.$emit('catresults', response.data);
+                this.$emit('catresults', response.data.data);
                 this.loading = false;
             })
       },
